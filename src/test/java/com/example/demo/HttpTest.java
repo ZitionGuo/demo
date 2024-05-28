@@ -87,7 +87,7 @@ public class HttpTest {
     public void testData() {
         String json = "[\n" +
                 "    {\n" +
-                "        \"shopId\": \"9014\",\n" +
+                "        \"shopId\": \"3T01\",\n" +
                 "        \"skuCode\": \"R-1005445\"\n" +
                 "    }\n" +
                 "]";
@@ -116,7 +116,7 @@ public class HttpTest {
             String str = "10.247.177.124:12300/categoryindexmanage/reindexshopsku?shopId=" + shopId;
             HttpUtil.post(str, "");
             System.out.println("门店重建, shopId:" + shopId);
-            TimeUnit.SECONDS.sleep(15);
+            TimeUnit.SECONDS.sleep(45);
         }
     }
 
@@ -135,7 +135,7 @@ public class HttpTest {
 
     @Test
     public void testUtils() {
-        long l = Long.parseLong("1");
+        long l = Long.parseLong("1234");
         System.out.println(l);
     }
 
