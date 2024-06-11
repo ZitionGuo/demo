@@ -204,6 +204,21 @@ public class Test0604 {
             current = current.next;
         }
 
+        /**
+         * 假设以下两个链表：
+         *
+         * list1: 1 -> 3 -> 5
+         * list2: 2 -> 4 -> 6 -> 8
+         * 合并的过程如下：
+         *
+         * 比较1和2，取1，current指向1。
+         * 比较3和2，取2，current指向2。
+         * 比较3和4，取3，current指向3。
+         * 比较5和4，取4，current指向4。
+         * 比较5和6，取5，current指向5。
+         * 此时，list1已经遍历完，但list2还有6和8未处理，所以将list2的剩余部分连接到新链表的末尾：
+         * current.next = list2; // 此时 list2 为 6 -> 8
+         */
         // 连接剩余的节点 ** core
         if (list1 != null) {
             current.next = list1;
