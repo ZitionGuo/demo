@@ -1,13 +1,18 @@
 package com.example.demo;
 
 import cn.hutool.http.HttpUtil;
+import cn.hutool.poi.excel.ExcelReader;
+import cn.hutool.poi.excel.ExcelUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.util.StringUtils;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,15 +102,25 @@ public class HttpTest {
 
     @Test
     public void testPost() throws InterruptedException {
-        for (String item : Constant.INFO_LIST) {
+        ExcelReader reader = ExcelUtil.getReader(new File("/Users/gzx/Desktop/dataList.xlsx"));
+        List<Map<String, Object>> result = reader.readAll();
+        ArrayList<String> dataList = Lists.newArrayList();
+        for (Map<String, Object> item : result) {
+            String skuShop = (String) item.get("门店商品列表");
+            if (StringUtils.isNotBlank(skuShop)) {
+                dataList.add(skuShop);
+            }
+        }
+        System.out.println(dataList.size());
+        for (String item : dataList) {
             String[] array = item.split("_");
-            String skuCode = array[0];
-            String shopId = array[1];
+            String shopId = array[0];
+            String skuCode = array[1];
             String str = "10.247.177.124:12300/categoryindexmanage/reindexsku?shopId=" + shopId + "&skuCode=" + skuCode;
-            System.out.println(str);
-            Thread.sleep(100);
-            String result = HttpUtil.post(str, "");
-            System.out.println(result);
+            log.info("门店:{} 商品:{} 重建完成", shopId, skuCode);
+            TimeUnit.SECONDS.sleep(1);
+            String httpResult = HttpUtil.post(str, "");
+            System.out.println(httpResult);
         }
     }
 
