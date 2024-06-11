@@ -34,12 +34,13 @@ public class Test0604 {
 //        System.out.println(isValid1("([)]"));
 //        System.out.println(removeDuplicates(new int[]{0,0,1,1,1,2,2,3,3,4}));
 //        System.out.println(removeDuplicates1(new int[]{0,0,1,1,1,2,2,3,3,4}));
-        ListNode list1 = new ListNode(1);
-        list1.next = new ListNode(3);
-        ListNode list2 = new ListNode(2);
-        list2.next = new ListNode(4);
+//        ListNode list1 = new ListNode(1);
+//        list1.next = new ListNode(3);
+//        ListNode list2 = new ListNode(2);
+//        list2.next = new ListNode(4);
 //        System.out.println(mergeTwoLists(list1, list2));
-        System.out.println(mergeTwoLists1(list1, list2));
+//        System.out.println(mergeTwoLists1(list1, list2));
+        System.out.println(strStr("sadbutsad", "sad"));
     }
 
     private String longestCommonPrefix(String[] strs) {
@@ -251,7 +252,20 @@ public class Test0604 {
     //输入：haystack = "leetcode", needle = "leeto"
     //输出：-1
     public int strStr(String haystack, String needle) {
-        return -1;
+        if (!haystack.contains(needle)) {
+            return -1;
+        }
+        return haystack.indexOf(needle);
+//        int i = 0;
+//        while (i < needle.length()) {
+//            if (haystack.charAt(i) != needle.charAt(i) ) {
+//                return -1;
+//            }
+//            if (i == needle.length() - 1) {
+//                return needle.length();
+//            }
+//        }
+//        return -1;
     }
 
 
