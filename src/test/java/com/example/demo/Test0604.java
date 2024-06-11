@@ -3,9 +3,12 @@ package com.example.demo;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -25,8 +28,10 @@ public class Test0604 {
         String s = "index";
 //        System.out.println(s.indexOf("index")); // 0
 //        System.out.println(s.substring(0, 4)); // inde
-//        System.out.println(isValid("([)]")); // wrong answer
-        System.out.println(isValid1("([)]"));
+//        System.out.println(isValid("([)]")); // wrong method
+//        System.out.println(isValid1("([)]"));
+//        System.out.println(removeDuplicates(new int[]{0,0,1,1,1,2,2,3,3,4}));
+        System.out.println(removeDuplicates1(new int[]{0,0,1,1,1,2,2,3,3,4}));
     }
 
     private String longestCommonPrefix(String[] strs) {
@@ -90,6 +95,30 @@ public class Test0604 {
 
      // 输入：nums = [0,0,1,1,1,2,2,3,3,4] 输出：5, nums = [0,1,2,3,4]
     public int removeDuplicates(int[] nums) {
-        return 0;
+        LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            Integer value = map.get(nums[i]);
+            if (value == null) {
+                map.put(nums[i], 1);
+            } else {
+                map.put(nums[i], ++value);
+            }
+        }
+        System.out.println(map);
+        Set<Integer> integers = map.keySet();
+        ArrayList<Integer> list = new ArrayList<>(integers);
+        for (int i = 0; i < nums.length; i++) {
+            if (i < list.size() && list.get(i) != null) {
+                nums[i] = list.get(i);
+            } else {
+                nums[i] = 0;
+            }
+        }
+        System.out.println(Arrays.toString(nums));
+        return integers.size();
+    }
+
+    public int removeDuplicates1(int[] nums) {
+        return 1;
     }
 }
