@@ -229,4 +229,30 @@ public class Test0604 {
         return dummy.next; // 返回哑节点的下一个节点，即合并后的链表的头节点
     }
 
+    public ListNode mergeTwoLists2(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        if (l1.val < l2.val) {
+            l1.next = mergeTwoLists(l1.next, l2);
+            return l1;
+        } else {
+            l2.next = mergeTwoLists(l2.next, l1);
+            return l2;
+        }
+    }
+
+    // 示例 1：
+    //输入：haystack = "sadbutsad", needle = "sad"
+    //输出：0
+    //解释："sad" 在下标 0 和 6 处匹配。
+    //第一个匹配项的下标是 0 ，所以返回 0 。
+
+    // 示例 2：
+    //输入：haystack = "leetcode", needle = "leeto"
+    //输出：-1
+    public int strStr(String haystack, String needle) {
+        return -1;
+    }
+
+
 }
