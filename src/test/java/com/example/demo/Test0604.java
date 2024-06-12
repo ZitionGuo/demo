@@ -19,12 +19,14 @@ import java.util.Stack;
  */
 public class Test0604 {
 
-    static Map<Character,Character> brackets = new HashMap();
+    static Map<Character, Character> brackets = new HashMap();
+
     static {
         brackets.put(')', '(');
         brackets.put(']', '[');
         brackets.put('}', '{');
     }
+
     @Test
     public void testOther() {
         String s = "index";
@@ -40,7 +42,9 @@ public class Test0604 {
 //        list2.next = new ListNode(4);
 //        System.out.println(mergeTwoLists(list1, list2));
 //        System.out.println(mergeTwoLists1(list1, list2));
-        System.out.println(strStr("sadbutsad", "sad"));
+//        System.out.println(strStr("sadbutsad", "sad"));
+//        System.out.println(strStr1("sadbutsad", "sad"));
+        System.out.println(removeElement(new int[]{3, 2, 2, 3}, 3));
     }
 
     private String longestCommonPrefix(String[] strs) {
@@ -102,7 +106,7 @@ public class Test0604 {
         return stack.isEmpty();
     }
 
-     // 输入：nums = [0,0,1,1,1,2,2,3,3,4] 输出：5, nums = [0,1,2,3,4]
+    // 输入：nums = [0,0,1,1,1,2,2,3,3,4] 输出：5, nums = [0,1,2,3,4]
     public int removeDuplicates(int[] nums) {
         LinkedHashMap<Integer, Integer> map = new LinkedHashMap<>();
         for (int i = 0; i < nums.length; i++) {
@@ -129,25 +133,35 @@ public class Test0604 {
 
     // [0,0,1,1,1,2,2,3,3,4] 输出：5, nums = [0,1,2,3,4]
     public int removeDuplicates1(int[] nums) {
-        if(nums == null || nums.length == 0) return 0;
+        if (nums == null || nums.length == 0) return 0;
         int slow = 0;
         int fast = 1;
         while (fast < nums.length) {
             if (nums[slow] != nums[fast]) {
                 nums[slow + 1] = nums[fast];
-                slow ++;
+                slow++;
             }
-            fast ++;
+            fast++;
         }
         return slow + 1;
     }
+
     @Data
     class ListNode {
         int val;
         ListNode next;
-        ListNode() {}
-        ListNode(int val) { this.val = val; }
-        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
 
         @Override
         public String toString() {
@@ -157,6 +171,7 @@ public class Test0604 {
                     '}';
         }
     }
+
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         if (list1 == null && list2 == null) {
             return null;
@@ -249,23 +264,64 @@ public class Test0604 {
     //第一个匹配项的下标是 0 ，所以返回 0 。
 
     // 示例 2：
-    //输入：haystack = "leetcode", needle = "leeto"
+    //输入：haystack = "leetcode", needle = "tleeto"
     //输出：-1
     public int strStr(String haystack, String needle) {
         if (!haystack.contains(needle)) {
             return -1;
         }
         return haystack.indexOf(needle);
-//        int i = 0;
-//        while (i < needle.length()) {
-//            if (haystack.charAt(i) != needle.charAt(i) ) {
-//                return -1;
-//            }
-//            if (i == needle.length() - 1) {
-//                return needle.length();
-//            }
-//        }
-//        return -1;
+    }
+
+    public int strStr1(String haystack, String needle) {
+        char[] array = haystack.toCharArray();
+        int index;
+        for (int i = 0; i < array.length; i++) {
+            int j = 0;
+            while (array[i] != needle.charAt(j)) {
+                j++;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 示例 1：
+     * 输入：nums = [3,2,2,3], val = 3
+     * 输出：2, nums = [2,2,_,_]
+     * 解释：你的函数函数应该返回 k = 2, 并且 nums 中的前两个元素均为 2。
+     * <p>
+     * 示例 2：
+     * 输入：nums = [0,1,2,2,3,0,4,2], val = 2
+     * 输出：5, nums = [0,1,4,0,3,_,_,_]
+     * 解释：你的函数应该返回 k = 5，并且 nums 中的前五个元素为 0,0,1,3,4。
+     * 注意这五个元素可以任意顺序返回。
+     */
+    public int removeElement(int[] nums, int val) {
+        int k = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != val) {
+                nums[k] = nums[i];
+                k++;
+            }
+        }
+        System.out.println(Arrays.toString(nums));
+        return k;
+    }
+
+    // double pointer
+    public int removeElement1(int[] nums, int val) {
+        int before = 0;
+        int after = nums.length;
+        while (before < after) {
+            if (nums[before] == val) {
+                nums[before] = nums[after - 1];
+                after--;
+            } else {
+                before++;
+            }
+        }
+        return before;
     }
 
 
