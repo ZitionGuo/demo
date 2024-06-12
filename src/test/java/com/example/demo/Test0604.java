@@ -44,7 +44,8 @@ public class Test0604 {
 //        System.out.println(mergeTwoLists1(list1, list2));
 //        System.out.println(strStr("sadbutsad", "sad"));
 //        System.out.println(strStr1("sadbutsad", "sad"));
-        System.out.println(removeElement(new int[]{3, 2, 2, 3}, 3));
+//        System.out.println(removeElement(new int[]{3, 2, 2, 3}, 3));
+        System.out.println(accountBalanceAfterPurchase(18));
     }
 
     private String longestCommonPrefix(String[] strs) {
@@ -310,6 +311,12 @@ public class Test0604 {
     }
 
     // double pointer
+
+    /**
+     * 如果要移除的元素恰好在数组的开头，例如序列 [1,2,3,4,5]，当 val 为 1 时，我们需要把每一个元素都左移一位。
+     * 注意到题目中说：「元素的顺序可以改变」。实际上我们可以直接将最后一个元素 5 移动到序列开头，取代元素 1，得到序列 [5,2,3,4]，同样满足题目要求。
+     * 这个优化在序列中 val 元素的数量较少时非常有效。
+     */
     public int removeElement1(int[] nums, int val) {
         int before = 0;
         int after = nums.length;
@@ -324,5 +331,14 @@ public class Test0604 {
         return before;
     }
 
+
+    public int accountBalanceAfterPurchase(int purchaseAmount) {
+        if (purchaseAmount == 100) {
+            return 0;
+        }
+        double s = (double) purchaseAmount / 10 % 10;
+        // 四舍五入
+        return (int) (100 - Math.round(s) * 10);
+    }
 
 }
