@@ -33,19 +33,18 @@ public class Test0604 {
 //        System.out.println(s.indexOf("index")); // 0
 //        System.out.println(s.substring(0, 4)); // inde
 //        System.out.println(isValid("([)]")); // wrong method
-//        System.out.println(isValid1("([)]"));
 //        System.out.println(removeDuplicates(new int[]{0,0,1,1,1,2,2,3,3,4}));
-//        System.out.println(removeDuplicates1(new int[]{0,0,1,1,1,2,2,3,3,4}));
 //        ListNode list1 = new ListNode(1);
 //        list1.next = new ListNode(3);
 //        ListNode list2 = new ListNode(2);
 //        list2.next = new ListNode(4);
 //        System.out.println(mergeTwoLists(list1, list2));
-//        System.out.println(mergeTwoLists1(list1, list2));
 //        System.out.println(strStr("sadbutsad", "sad"));
-//        System.out.println(strStr1("sadbutsad", "sad"));
 //        System.out.println(removeElement(new int[]{3, 2, 2, 3}, 3));
-        System.out.println(accountBalanceAfterPurchase(18));
+//        System.out.println(accountBalanceAfterPurchase(18));
+//        System.out.println(lengthOfLastWord("the last american generation  "));
+//        System.out.println(Arrays.toString(plusOne(new int[]{9}))); // wrong answer, 没考虑到进位情况
+        System.out.println(Arrays.toString(plusOne1(new int[]{9,8,9})));
     }
 
     private String longestCommonPrefix(String[] strs) {
@@ -341,4 +340,68 @@ public class Test0604 {
         return (int) (100 - Math.round(s) * 10);
     }
 
+    public int lengthOfLastWord(String s) {
+        char[] array = s.toCharArray();
+        int result = 0;
+        boolean endFlag = true;
+        for (int i = array.length - 1; i >= 0; i--) {
+            if (array[i] == ' ' && endFlag) {
+                continue;
+            }
+            if (array[i] != ' ') {
+                result++;
+                endFlag = false;
+            } else {
+                break;
+            }
+        }
+        return result;
+    }
+
+    // GPT optimise: 不转化为数组，空间复杂度 O(n) -> O(1)
+    public int lengthOfLastWord1(String s) {
+        int length = 0;
+        boolean endFlag = true;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (s.charAt(i) == ' ') {
+                if (endFlag) {
+                    continue;
+                } else {
+                    break;
+                }
+            } else {
+                length++;
+                endFlag = false;
+            }
+        }
+        return length;
+    }
+
+    public int[] plusOne(int[] digits) {
+        digits[digits.length- 1] = digits[digits.length- 1] + 1;
+        return digits;
+    }
+
+    // 989
+    public int[] plusOne1(int[] digits) {
+//        int total = 0;
+        // 1,2,3
+//        for (int i = digits.length - 1; i >= 0; i--) {
+            // 通过乘10的个数算到总的值
+//            total = total + digits[i] * ;
+//        }
+        for (int i = digits.length - 1; i >= 0; i--) {
+            digits[i]++;
+            digits[i] = digits[i] % 10; // **core 9+1 % 10 等于0，走下一次循环。如果不等于0，说明正常累加了，直接返回数组即可
+            System.out.println("i:" + i + ", digits[i]:" + digits[i]);
+            System.out.println(digits[i] % 10);
+            if (digits[i] != 0) {
+                return digits;
+            }
+        }
+        // 9999 的特殊情况
+        digits = new int[digits.length + 1];
+        digits[0] = 1;
+        return digits;
+    }
 }

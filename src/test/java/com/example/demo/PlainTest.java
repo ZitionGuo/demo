@@ -126,5 +126,10 @@ public class PlainTest {
         }
     }
 
+    @Test
+    public void testDivide() {
+        System.out.println(12%10);
+    }
+
 
 }
