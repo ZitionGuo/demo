@@ -47,10 +47,16 @@ public class Test0604 {
 //        System.out.println(Arrays.toString(plusOne(new int[]{9}))); // wrong answer, 没考虑到进位情况
 //        System.out.println(Arrays.toString(plusOne1(new int[]{9,8,9})));
 //        System.out.println(addBinary("101", "111"));
-        TreeNode treeNode = new TreeNode(1);
-        TreeNode rightTreeNode = new TreeNode(2);
-        treeNode.right = rightTreeNode;
-        rightTreeNode.left = new TreeNode(3);
+//        TreeNode treeNode = new TreeNode(1);
+//        TreeNode rightTreeNode = new TreeNode(2);
+//        treeNode.right = rightTreeNode;
+//        rightTreeNode.left = new TreeNode(3);
+        TreeNode treeNode = new TreeNode(2);
+        TreeNode left = new TreeNode(3);
+        treeNode.left = left;
+        treeNode.right = new TreeNode(4);
+        left.left = new TreeNode(1);
+        left.right = new TreeNode(6);
         System.out.println(treeNode);
         System.out.println(inorderTraversal(treeNode));
     }
@@ -474,28 +480,19 @@ public class Test0604 {
     }
 
     // inorder: 左子树 -> 根节点 -> 右子树
-
-    /**
-     * 解答失败:
-     * 	测试用例:[2,3,null,1]
-     * 	测试结果:[3,2]
-     * 	期望结果:[1,3,2]
-     */
     public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        inorder(root, res);
+        return res;
+    }
+
+    public void inorder(TreeNode root, List<Integer> res) {
         if (root == null) {
-            return new ArrayList<>();
+            return;
         }
-        ArrayList<Integer> resultList = new ArrayList<>();
-        TreeNode left = root.left;
-        TreeNode right = root.right;
-        if (left != null) {
-            resultList.add(root.left.val);
-        }
-        resultList.add(root.val);
-        if (right != null) {
-            resultList.addAll(inorderTraversal(root.right));
-        }
-        return resultList;
+        inorder(root.left, res);
+        res.add(root.val);
+        inorder(root.right, res);
     }
 
 }
