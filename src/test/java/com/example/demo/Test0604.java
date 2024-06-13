@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import lombok.Data;
+import org.apache.poi.ss.formula.functions.T;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -45,7 +46,13 @@ public class Test0604 {
 //        System.out.println(lengthOfLastWord("the last american generation  "));
 //        System.out.println(Arrays.toString(plusOne(new int[]{9}))); // wrong answer, 没考虑到进位情况
 //        System.out.println(Arrays.toString(plusOne1(new int[]{9,8,9})));
-        System.out.println(addBinary("101", "111"));
+//        System.out.println(addBinary("101", "111"));
+        TreeNode treeNode = new TreeNode(1);
+        TreeNode rightTreeNode = new TreeNode(2);
+        treeNode.right = rightTreeNode;
+        rightTreeNode.left = new TreeNode(3);
+        System.out.println(treeNode);
+        System.out.println(inorderTraversal(treeNode));
     }
 
     private String longestCommonPrefix(String[] strs) {
@@ -444,4 +451,51 @@ public class Test0604 {
         }
         return result.reverse().toString();
     }
+    class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+
+        @Override
+        public String toString() {
+            return "TreeNode{" +
+                    "val=" + val +
+                    ", left=" + left +
+                    ", right=" + right +
+                    '}';
+        }
+    }
+
+    // inorder: 左子树 -> 根节点 -> 右子树
+
+    /**
+     * 解答失败:
+     * 	测试用例:[2,3,null,1]
+     * 	测试结果:[3,2]
+     * 	期望结果:[1,3,2]
+     */
+    public List<Integer> inorderTraversal(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        ArrayList<Integer> resultList = new ArrayList<>();
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        if (left != null) {
+            resultList.add(root.left.val);
+        }
+        resultList.add(root.val);
+        if (right != null) {
+            resultList.addAll(inorderTraversal(root.right));
+        }
+        return resultList;
+    }
+
 }
