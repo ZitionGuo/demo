@@ -128,7 +128,10 @@ public class PlainTest {
 
     @Test
     public void testDivide() {
-        System.out.println(12%10);
+        System.out.println(0%2); // 0
+        System.out.println(1%2); // 1
+        System.out.println(2%2); // 0
+        System.out.println(3%2); // 1
     }
 
 
