@@ -151,21 +151,17 @@ public class TreeTest {
         if (root == null) {
             return 0;
         }
-        return add(root);
+        return add(root, 0);
     }
 
-    private int add(TreeNode root) {
-        int count = 0;
-        if (root.left == null && root.right == null) {
-            return 0;
+    private int add(TreeNode root, int depth) {
+        if (root == null) {
+            return depth;
         }
-        count++;
-        if (root.left != null) {
-            add(root.left);
-        } else {
-            add(root.right);
-        }
-        return count;
+        depth++;
+        int leftDepth = add(root.left, depth);
+        int rightDepth = add(root.right, depth);
+        return Math.max(leftDepth, rightDepth);
     }
 
 }
