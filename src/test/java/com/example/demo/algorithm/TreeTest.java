@@ -27,21 +27,36 @@ public class TreeTest {
 //        System.out.println(treeNode);
 //        System.out.println(inorderTraversal(treeNode));
 //        System.out.println(inorderTraversal1(treeNode));
-        TreeNode a = new TreeNode(1);
-        a.left = new TreeNode(1);
-        a.right = new TreeNode(2);
-        TreeNode b = new TreeNode(1);
-        b.left = new TreeNode(1);
-        b.right = new TreeNode(2);
-        System.out.println(isSameTree(a, b));
+//        TreeNode a = new TreeNode(1);
+//        a.left = new TreeNode(1);
+//        a.right = new TreeNode(2);
+//        TreeNode b = new TreeNode(1);
+//        b.left = new TreeNode(1);
+//        b.right = new TreeNode(2);
+//        System.out.println(isSameTree(a, b));
+//        TreeNode symmetricNode = new TreeNode(1);
+//        symmetricNode.left = new TreeNode(2);
+//        symmetricNode.left.left = new TreeNode(3);
+//        symmetricNode.left.right = new TreeNode(4);
+//        symmetricNode.right = new TreeNode(2);
+//        symmetricNode.right.left = new TreeNode(4);
+//        symmetricNode.right.right = new TreeNode(3);
+//        System.out.println(symmetricNode);
+//        System.out.println(isSymmetric(symmetricNode));
     }
 
     class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
-        TreeNode() {}
-        TreeNode(int val) { this.val = val; }
+
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
         TreeNode(int val, TreeNode left, TreeNode right) {
             this.val = val;
             this.left = left;
@@ -57,6 +72,7 @@ public class TreeTest {
                     '}';
         }
     }
+
     // inorder: 左子树 -> 根节点 -> 右子树
     // 递归
     public List<Integer> inorderTraversal(TreeNode root) {
@@ -107,6 +123,29 @@ public class TreeTest {
             return false;
         }
         return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    }
+
+    // 对称二叉树
+    // 递归
+    public boolean isSymmetric(TreeNode root) {
+        return compare(root.left, root.right);
+    }
+
+    public boolean compare(TreeNode left, TreeNode right) {
+        if (left == null && right == null) {
+            return true;
+        }
+        if (left == null || right == null) {
+            return false;
+        }
+        if (left.val != right.val) {
+            return false;
+        }
+        return compare(left.left, right.right) && compare(left.right, right.left);
+    }
+
+    public int maxDepth(TreeNode root) {
+        return 0;
     }
 
 }

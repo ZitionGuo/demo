@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 
 /**
  * @author guozixuan
@@ -21,6 +22,14 @@ public class LinkedListTest {
         System.out.println(mergeTwoLists(list1, list2));
         System.out.println(mergeTwoLists1(list1, list2));
         System.out.println(mergeTwoLists2(list1, list2));
+        TreeNode symmetricNode = new TreeNode(1);
+        symmetricNode.left = new TreeNode(2);
+        symmetricNode.left.left = new TreeNode(3);
+        symmetricNode.left.right = new TreeNode(4);
+        symmetricNode.right = new TreeNode(2);
+        symmetricNode.right.left = new TreeNode(4);
+        symmetricNode.right.right = new TreeNode(3);
+        System.out.println(isSymmetric1(symmetricNode));
     }
 
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
@@ -105,6 +114,62 @@ public class LinkedListTest {
         } else {
             l2.next = mergeTwoLists2(l2.next, l1);
             return l2;
+        }
+    }
+
+    // 队列 先进先出
+    public boolean isSymmetric1(TreeNode root) {
+        if (root == null || (root.left == null && root.right == null)) {
+            return true;
+        }
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.add(root.left);
+        queue.add(root.right);
+        while (!queue.isEmpty()) {
+            TreeNode left = queue.removeFirst();
+            TreeNode right = queue.removeFirst();
+            if (left == null && right == null) {
+                continue;
+            }
+            if (left == null || right == null) {
+                return false;
+            }
+            if (left.val != right.val) {
+                return false;
+            }
+            queue.add(left.left);
+            queue.add(right.right);
+            queue.add(left.right);
+            queue.add(right.left);
+        }
+        return true;
+    }
+
+    class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode() {
+        }
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+
+        @Override
+        public String toString() {
+            return "TreeNode{" +
+                    "val=" + val +
+                    ", left=" + left +
+                    ", right=" + right +
+                    '}';
         }
     }
 
