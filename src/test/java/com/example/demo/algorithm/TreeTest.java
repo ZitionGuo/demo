@@ -14,19 +14,26 @@ public class TreeTest {
 
     @Test
     public void test() {
-        TreeNode treeNode = new TreeNode(2);
-        TreeNode left = new TreeNode(3);
-        treeNode.left = left;
-        treeNode.right = new TreeNode(4);
-        treeNode.right.left = new TreeNode(9);
-        treeNode.right.right = new TreeNode(10);
-        left.left = new TreeNode(1);
-        left.right = new TreeNode(6);
-        left.left.left = new TreeNode(7);
-        left.left.right = new TreeNode(8);
-        System.out.println(treeNode);
+//        TreeNode treeNode = new TreeNode(2);
+//        TreeNode left = new TreeNode(3);
+//        treeNode.left = left;
+//        treeNode.right = new TreeNode(4);
+//        treeNode.right.left = new TreeNode(9);
+//        treeNode.right.right = new TreeNode(10);
+//        left.left = new TreeNode(1);
+//        left.right = new TreeNode(6);
+//        left.left.left = new TreeNode(7);
+//        left.left.right = new TreeNode(8);
+//        System.out.println(treeNode);
 //        System.out.println(inorderTraversal(treeNode));
-        System.out.println(inorderTraversal1(treeNode));
+//        System.out.println(inorderTraversal1(treeNode));
+        TreeNode a = new TreeNode(1);
+        a.left = new TreeNode(1);
+        a.right = new TreeNode(2);
+        TreeNode b = new TreeNode(1);
+        b.left = new TreeNode(1);
+        b.right = new TreeNode(2);
+        System.out.println(isSameTree(a, b));
     }
 
     class TreeNode {
@@ -88,7 +95,18 @@ public class TreeTest {
     }
 
     public boolean isSameTree(TreeNode p, TreeNode q) {
-        return false;
+        // method 1: 遍历后校验两个list是否一致。。。
+        // method 2: 递归左右遍历
+        if (p == null && q == null) {
+            return true;
+        }
+        if (p == null || q == null) {
+            return false;
+        }
+        if (p.val != q.val) {
+            return false;
+        }
+        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
     }
 
 }
