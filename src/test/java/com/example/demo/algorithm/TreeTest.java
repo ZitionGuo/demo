@@ -27,9 +27,10 @@ public class TreeTest {
 //        System.out.println(treeNode);
 //        System.out.println(inorderTraversal(treeNode));
 //        System.out.println(inorderTraversal1(treeNode));
-//        TreeNode a = new TreeNode(1);
-//        a.left = new TreeNode(1);
-//        a.right = new TreeNode(2);
+        TreeNode a = new TreeNode(1);
+        a.left = new TreeNode(1);
+        a.right = new TreeNode(2);
+        a.left.left = new TreeNode(3);
 //        TreeNode b = new TreeNode(1);
 //        b.left = new TreeNode(1);
 //        b.right = new TreeNode(2);
@@ -43,6 +44,7 @@ public class TreeTest {
 //        symmetricNode.right.right = new TreeNode(3);
 //        System.out.println(symmetricNode);
 //        System.out.println(isSymmetric(symmetricNode));
+        System.out.println(maxDepth(a));
     }
 
     class TreeNode {
@@ -144,8 +146,26 @@ public class TreeTest {
         return compare(left.left, right.right) && compare(left.right, right.left);
     }
 
+    // 一直往下遍历左右树
     public int maxDepth(TreeNode root) {
-        return 0;
+        if (root == null) {
+            return 0;
+        }
+        return add(root);
+    }
+
+    private int add(TreeNode root) {
+        int count = 0;
+        if (root.left == null && root.right == null) {
+            return 0;
+        }
+        count++;
+        if (root.left != null) {
+            add(root.left);
+        } else {
+            add(root.right);
+        }
+        return count;
     }
 
 }
