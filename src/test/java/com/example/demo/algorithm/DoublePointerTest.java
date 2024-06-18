@@ -10,7 +10,43 @@ public class DoublePointerTest {
 
     @Test
     public void test() {
-        System.out.println(removeDuplicates1(new int[]{0,0,1,1,1,2,2,3,3,4}));
+//        System.out.println(removeDuplicates1(new int[]{0,0,1,1,1,2,2,3,3,4}));
+        ListNode list1 = new ListNode(3);
+        ListNode list2 = new ListNode(1);
+        list1.next = list2;
+        ListNode list3 = new ListNode(2);
+        list2.next = list3;
+        ListNode list4 = new ListNode(5);
+        list3.next = list4;
+        ListNode list5 = new ListNode(6);
+        list4.next = list5;
+        list5.next = list2;
+        System.out.println(hasCycle(list1));
+    }
+
+    class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+
+        @Override
+        public String toString() {
+            return "ListNode{" +
+                    "val=" + val +
+                    ", next=" + next +
+                    '}';
+        }
     }
     // [0,0,1,1,1,2,2,3,3,4] 输出：5, nums = [0,1,2,3,4]
     public int removeDuplicates1(int[] nums) {
@@ -45,5 +81,33 @@ public class DoublePointerTest {
             }
         }
         return before;
+    }
+
+    //输入：head = [3,2,0,-4], pos = 1
+    //输出：true
+    //解释：链表中有一个环，其尾部连接到第二个节点。
+    //
+    //输入：head = [1,2], pos = 0
+    //输出：true
+    //解释：链表中有一个环，其尾部连接到第一个节点。
+    // * 双指针
+    public boolean hasCycle(ListNode head) {
+        if (head == null || head.next == null) {
+            return false;
+        }
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        // core: 有环则快指针可以一直循环下去，fast.next 不会为 null
+        while (fast != null && fast.next != null) {
+            slow = slow.next;        // 慢指针每次移动一步
+            fast = fast.next.next;   // 快指针每次移动两步
+            System.out.println("slow:" + slow.val + ", fast:" + fast.val);
+            if (slow == fast) {      // 快慢指针相遇，说明存在环
+                return true;
+            }
+        }
+        return false; // 快指针到达链表末尾，说明不存在环
     }
 }

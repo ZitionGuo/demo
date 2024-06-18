@@ -12,11 +12,15 @@ public class ArrayTest {
 
     @Test
     public void test() {
-        System.out.println(longestCommonPrefix(new String[]{"flower","flow","flight"}));
-        System.out.println(removeElement(new int[]{3, 2, 2, 3}, 3));
-        System.out.println(lengthOfLastWord("the last american generation  "));
-        System.out.println(Arrays.toString(plusOne(new int[]{9}))); // wrong answer, 没考虑到进位情况
-        System.out.println(Arrays.toString(plusOne1(new int[]{9,8,9})));
+//        System.out.println(longestCommonPrefix(new String[]{"flower","flow","flight"}));
+//        System.out.println(removeElement(new int[]{3, 2, 2, 3}, 3));
+//        System.out.println(lengthOfLastWord("the last american generation  "));
+//        System.out.println(Arrays.toString(plusOne(new int[]{9}))); // wrong answer, 没考虑到进位情况
+//        System.out.println(Arrays.toString(plusOne1(new int[]{9,8,9})));
+//        System.out.println(maxProfit(new int[]{7,1,5,3,6,4})); // 长度很大超时。。。
+//        System.out.println(maxProfit1(new int[]{7,1,5,3,6,4}));
+        System.out.println(isPalindrome("A man, a plan, a canal: Panama"));
+
     }
 
     private String longestCommonPrefix(String[] strs) {
@@ -122,5 +126,102 @@ public class ArrayTest {
         digits = new int[digits.length + 1];
         digits[0] = 1;
         return digits;
+    }
+
+    // 最大利息
+    // 输入：[7,1,5,3,6,4]，输出：5（6-1）
+    // 选择一个作为买入值，拿后面的减去该值，获取最大利息
+    public int maxProfit(int[] prices) {
+        int result = 0;
+        for (int i = 0; i < prices.length; i++) {
+            for (int j = i+1; j < prices.length; j++) {
+                System.out.println("i: " + i + ", j: " + j);
+                if (prices[i] > prices[j]) {
+                    continue;
+                }
+                System.out.println("price: [j] = " + prices[j]);
+                result = Math.max(result, prices[j] - prices[i]);
+                System.out.println("result " + result);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 解释2,6,1,4这样的情况
+     * 简单来说:是如下的情况(实际会比较的多一点,但是不影响总体)
+     * 首先,minPrice = 2 / profit = 6-2 = 4
+     * 然后找到一个更小的minPrice = 1  之后计算出来的profit = 4-1 = 3
+     *
+     * 最后比较两个profit,谁更大就取谁!  这才是关键,谁更大就取谁!
+     *
+     * 等于将股价分为多段--->
+     * 条件:要求每段都是升序,并且后面的价格段中minPrice比前面的minPrice更小,后面的价格段以minPrice开头
+     *
+     * 例如3,100,2,99,1,90 --> 这样算法就将这段数字分为三段,[3,100] [2,99] [1,90],
+     * 然后分别计算他们的profit,最后比较它们的大小,取最大的profit,返回
+     *
+     * 换个例子,如果是这样的情况:[7,2,10,3,1,40]
+     * 那么就分为[7,2,10,3] [1,40]
+     * 第一段是最佳profit是8, 第二段的最佳profit是39,最后比较它们,取更大值39
+     *
+     * 这即为动态规划的思路,求解多段问题,记录前面的最优解,然后与现在的最优解进行比较交换,最后剩下的就是最优解答案
+     */
+    public int maxProfit1(int[] prices) {
+        // 如果数组为空或长度为0，直接返回0
+        if (prices == null || prices.length == 0) {
+            return 0;
+        }
+
+        int minPrice = Integer.MAX_VALUE; // 初始化一个极大值，表示股票的最低价格
+        int maxProfit = 0; // 初始化最大利润为0
+
+        // 遍历所有股票价格
+        for (int price : prices) {
+            // 如果当前价格比minPrice小，更新minPrice
+            if (price < minPrice) {
+                minPrice = price; // 7 2
+            }
+            // 否则，计算当前价格卖出时的利润，并更新maxProfit
+            else if (price - minPrice > maxProfit) {
+                maxProfit = price - minPrice; // 10-1
+            }
+        }
+        return maxProfit; // 返回最大利润
+    }
+
+    /**
+     * 示例 1：
+     *
+     * 输入: s = "A man, a plan, a canal: Panama"
+     * 输出：true
+     * 解释："amanaplanacanalpanama" 是回文串。
+     * 示例 2：
+     *
+     */
+    public boolean isPalindrome(String s) {
+        if (s.isEmpty()) {
+            return false;
+        }
+        if (s.trim().isEmpty()) {
+            return true;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isLetterOrDigit(s.charAt(i))) {
+                sb.append(Character.toLowerCase(s.charAt(i)));
+            }
+        }
+        System.out.println(sb);
+        int left = 0;
+        int right = sb.length()-1;
+        while (left < right) {
+            if (sb.charAt(left) != sb.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
     }
 }

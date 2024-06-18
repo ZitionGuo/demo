@@ -15,21 +15,21 @@ public class LinkedListTest {
 
     @Test
     public void test() {
-        ListNode list1 = new ListNode(1);
-        list1.next = new ListNode(3);
-        ListNode list2 = new ListNode(2);
-        list2.next = new ListNode(4);
-        System.out.println(mergeTwoLists(list1, list2));
-        System.out.println(mergeTwoLists1(list1, list2));
-        System.out.println(mergeTwoLists2(list1, list2));
-        TreeNode symmetricNode = new TreeNode(1);
-        symmetricNode.left = new TreeNode(2);
-        symmetricNode.left.left = new TreeNode(3);
-        symmetricNode.left.right = new TreeNode(4);
-        symmetricNode.right = new TreeNode(2);
-        symmetricNode.right.left = new TreeNode(4);
-        symmetricNode.right.right = new TreeNode(3);
-        System.out.println(isSymmetric1(symmetricNode));
+//        ListNode list1 = new ListNode(1);
+//        list1.next = new ListNode(3);
+//        ListNode list2 = new ListNode(2);
+//        list2.next = new ListNode(4);
+//        System.out.println(mergeTwoLists(list1, list2));
+//        System.out.println(mergeTwoLists1(list1, list2));
+//        System.out.println(mergeTwoLists2(list1, list2));
+//        TreeNode symmetricNode = new TreeNode(1);
+//        symmetricNode.left = new TreeNode(2);
+//        symmetricNode.left.left = new TreeNode(3);
+//        symmetricNode.left.right = new TreeNode(4);
+//        symmetricNode.right = new TreeNode(2);
+//        symmetricNode.right.left = new TreeNode(4);
+//        symmetricNode.right.right = new TreeNode(3);
+//        System.out.println(isSymmetric1(symmetricNode));
     }
 
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
@@ -173,7 +173,6 @@ public class LinkedListTest {
         }
     }
 
-    @Data
     class ListNode {
         int val;
         ListNode next;
