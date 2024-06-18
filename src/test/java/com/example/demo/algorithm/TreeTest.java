@@ -27,10 +27,10 @@ public class TreeTest {
 //        System.out.println(treeNode);
 //        System.out.println(inorderTraversal(treeNode));
 //        System.out.println(inorderTraversal1(treeNode));
-        TreeNode a = new TreeNode(1);
-        a.left = new TreeNode(1);
-        a.right = new TreeNode(2);
-        a.left.left = new TreeNode(3);
+//        TreeNode a = new TreeNode(1);
+//        a.left = new TreeNode(1);
+//        a.right = new TreeNode(2);
+//        a.left.left = new TreeNode(3);
 //        TreeNode b = new TreeNode(1);
 //        b.left = new TreeNode(1);
 //        b.right = new TreeNode(2);
@@ -44,7 +44,19 @@ public class TreeTest {
 //        symmetricNode.right.right = new TreeNode(3);
 //        System.out.println(symmetricNode);
 //        System.out.println(isSymmetric(symmetricNode));
-        System.out.println(maxDepth(a));
+//        System.out.println(maxDepth(a));
+        TreeNode preTreeNode = new TreeNode(2);
+        preTreeNode.left = new TreeNode(3);
+        preTreeNode.left.left = new TreeNode(1);
+        preTreeNode.left.right = new TreeNode(6);
+        preTreeNode.left.left.left = new TreeNode(7);
+        preTreeNode.left.left.right = new TreeNode(8);
+        preTreeNode.right = new TreeNode(4);
+        preTreeNode.right.left = new TreeNode(9);
+        preTreeNode.right.right = new TreeNode(10);
+//        System.out.println(preorderTraversal(preTreeNode)); // [2, 3, 1, 7, 8, 6, 4, 9, 10]
+//        System.out.println(postorderTraversal(preTreeNode));
+        System.out.println(isBalanced(preTreeNode));
     }
 
     class TreeNode {
@@ -75,7 +87,7 @@ public class TreeTest {
         }
     }
 
-    // inorder: 左子树 -> 根节点 -> 右子树
+    // 中序: 左子树 -> 根节点 -> 右子树
     // 递归
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> res = new ArrayList<>();
@@ -164,4 +176,39 @@ public class TreeTest {
         return Math.max(leftDepth, rightDepth);
     }
 
+    // 前序：根 -> 左 -> 右
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        preorder(root, list);
+        return list;
+    }
+
+    private void preorder(TreeNode root, List<Integer> list) {
+        if (root == null) {
+            return;
+        }
+        list.add(root.val);
+        preorder(root.left, list);
+        preorder(root.right, list);
+    }
+
+    // 后序：左 -> 右 -> 根
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        postorder(root, list);
+        return list;
+    }
+
+    private void postorder(TreeNode root, List<Integer> list) {
+        if (root == null) {
+            return;
+        }
+        postorder(root.left, list);
+        postorder(root.right, list);
+        list.add(root.val);
+    }
+
+    public boolean isBalanced(TreeNode root) {
+        return false;
+    }
 }
