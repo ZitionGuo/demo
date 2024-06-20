@@ -209,6 +209,18 @@ public class TreeTest {
     }
 
     public boolean isBalanced(TreeNode root) {
-        return false;
+        // 记录左右节点往下遍历的最大层数
+        if (root == null) {
+            return true;
+        }
+        if (root.left == null && root.right == null) {
+            return true;
+        }
+        if (!isBalanced(root.left) || !isBalanced(root.right)) {
+            return false;
+        }
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+        return Math.abs(left-right) <= 1;
     }
 }

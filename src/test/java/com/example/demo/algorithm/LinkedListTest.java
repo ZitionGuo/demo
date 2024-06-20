@@ -30,6 +30,15 @@ public class LinkedListTest {
 //        symmetricNode.right.left = new TreeNode(4);
 //        symmetricNode.right.right = new TreeNode(3);
 //        System.out.println(isSymmetric1(symmetricNode));
+        ListNode listNode = new ListNode(1);
+        listNode.next = new ListNode(2);
+        listNode.next.next = new ListNode(6);
+        listNode.next.next.next = new ListNode(3);
+        listNode.next.next.next.next = new ListNode(4);
+        listNode.next.next.next.next.next = new ListNode(5);
+        listNode.next.next.next.next.next.next = new ListNode(6);
+//        System.out.println(removeElements(listNode, 6));
+        System.out.println(removeElements1(listNode, 6));
     }
 
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
@@ -195,6 +204,43 @@ public class LinkedListTest {
                     "val=" + val +
                     ", next=" + next +
                     '}';
+        }
+    }
+
+    public ListNode removeElements(ListNode head, int val) {
+        System.out.println(head);
+        // 由于链表的第一个节点可能就是要删除的节点，直接删除头节点会使操作变得复杂。引入哑节点后，无论头节点是否需要被删除，都可以使用相同的逻辑处理，避免了对头节点的特殊处理。
+        ListNode dummy = new ListNode(val-1);
+        dummy.next = head;
+        ListNode prev = dummy;
+        while (prev.next != null) {
+            if (prev.next.val == val) {
+                prev.next = prev.next.next;
+            } else {
+                prev = prev.next;
+            }
+            System.out.println(dummy);
+        }
+        return dummy.next;
+    }
+
+    // 递归版本
+    // 1 -> 2 -> 6 -> 3 -> 4 -> 5 -> 6  6
+    public ListNode removeElements1(ListNode head, int val) {
+        // 递归的终止条件：如果当前节点是null，返回null
+        if (head == null) {
+            return null;
+        }
+
+        // 递归处理链表的其余部分
+        head.next = removeElements1(head.next, val);
+        System.out.println(head);
+
+        // 判断当前节点是否需要删除
+        if (head.val == val) {
+            return head.next; // 当前节点需要删除，返回下一个节点
+        } else {
+            return head; // 当前节点不需要删除，返回当前节点
         }
     }
 }
