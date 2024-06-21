@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,7 +21,8 @@ public class MapTest {
 //        System.out.println(removeDuplicates(new int[]{0,0,1,1,1,2,2,3,3,4}));
 //        System.out.println(majorityElement(new int[]{3,2,3}));
 //        System.out.println(majorityElement1(new int[]{3,4,5,5,4,4,5,5,5}));
-        System.out.println(majorityElementSecondVersion(new int[]{6,6,5,5,3,4,6,5}));
+//        System.out.println(majorityElementSecondVersion(new int[]{6,6,5,5,3,4,6,5}));
+        System.out.println(isIsomorphic("paper", "title")); // 很麻烦
     }
 
     // 输入：nums = [0,0,1,1,1,2,2,3,3,4] 输出：5, nums = [0,1,2,3,4]
@@ -140,6 +142,80 @@ public class MapTest {
             }
         }
         return resultList;
+    }
+
+    // s = "paper", t = "title" -> true
+    public boolean isIsomorphic(String s, String t) {
+        if (s.length() != t.length()) {
+            return false;
+        }
+        LinkedHashMap<String, List<Integer>> mapS = getMap(s);
+        LinkedHashMap<String, List<Integer>> mapT = getMap(t);
+        System.out.println(mapS);
+        System.out.println(mapT);
+        if (mapS.size() != mapT.size()) {
+            return false;
+        }
+        ArrayList<String> listS = new ArrayList<>(mapS.keySet());
+        ArrayList<String> listT = new ArrayList<>(mapT.keySet());
+        for (int i = 0; i < mapS.size(); i++) {
+            List<Integer> list1 = mapS.get(listS.get(i));
+            List<Integer> list2 = mapT.get(listT.get(i));
+            if (list1.size() != list2.size()) {
+                return false;
+            }
+            for (int j = 0; j < list1.size(); j++) {
+                if (!list1.get(j).equals(list2.get(j))) {
+                    return false;
+                }
+            }
+
+        }
+        // 记入元素位置 遍历匹配
+        return true;
+    }
+
+    private LinkedHashMap<String, List<Integer>> getMap(String str) {
+        LinkedHashMap<String, List<Integer>> map = new LinkedHashMap<>();
+        for (int i = 0; i < str.length(); i++) {
+            String key = String.valueOf(str.charAt(i));
+            List<Integer> value = map.get(key);
+            if (value == null || value.isEmpty()) {
+                ArrayList<Integer> list = new ArrayList<>();
+                list.add(i);
+                map.put(key, list);
+            } else {
+                value.add(i);
+                map.put(key, value);
+            }
+        }
+        return map;
+    }
+
+    public boolean isIsomorphic1(String s, String t) {
+        if (s.length() != t.length()) {
+            return false;
+        }
+
+        HashMap<Character, Character> mapS = new HashMap<>();
+        HashMap<Character, Character> mapT = new HashMap<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            char charS = s.charAt(i);
+            char charT = t.charAt(i);
+
+            if (mapS.containsKey(charS) && mapS.get(charS) != charT) {
+                return false;
+            }
+            if (mapT.containsKey(charT) && mapT.get(charT) != charS) {
+                return false;
+            }
+
+            mapS.put(charS, charT);
+            mapT.put(charT, charS);
+        }
+
+        return true;
     }
 
 }

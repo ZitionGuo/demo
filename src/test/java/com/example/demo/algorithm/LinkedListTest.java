@@ -30,15 +30,20 @@ public class LinkedListTest {
 //        symmetricNode.right.left = new TreeNode(4);
 //        symmetricNode.right.right = new TreeNode(3);
 //        System.out.println(isSymmetric1(symmetricNode));
+//        ListNode listNode = new ListNode(1);
+//        listNode.next = new ListNode(2);
+//        listNode.next.next = new ListNode(6);
+//        listNode.next.next.next = new ListNode(3);
+//        listNode.next.next.next.next = new ListNode(4);
+//        listNode.next.next.next.next.next = new ListNode(5);
+//        listNode.next.next.next.next.next.next = new ListNode(6);
+//        System.out.println(removeElements(listNode, 6));
+//        System.out.println(removeElements1(listNode, 6));
         ListNode listNode = new ListNode(1);
         listNode.next = new ListNode(2);
-        listNode.next.next = new ListNode(6);
-        listNode.next.next.next = new ListNode(3);
-        listNode.next.next.next.next = new ListNode(4);
-        listNode.next.next.next.next.next = new ListNode(5);
-        listNode.next.next.next.next.next.next = new ListNode(6);
-//        System.out.println(removeElements(listNode, 6));
-        System.out.println(removeElements1(listNode, 6));
+        listNode.next.next = new ListNode(3);
+        listNode.next.next.next = new ListNode(4);
+        System.out.println(reverseList(listNode));
     }
 
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
@@ -243,4 +248,42 @@ public class LinkedListTest {
             return head; // 当前节点不需要删除，返回当前节点
         }
     }
+
+    // 反转
+    // 1，2，3，4
+    public ListNode reverseList(ListNode head) {
+        if (head == null) return null;
+        if (head.next == null) return head;
+        ListNode prev = null; // core
+        ListNode newHead = null;
+        ListNode cur = head;
+        while (cur != null) {
+            ListNode curNext = cur.next;  // 暂存下一个节点
+//            System.out.println(cur);
+            if (curNext == null) {
+                newHead = cur;  // 更新新头节点
+            }
+            cur.next = prev;  // 反转当前节点的指针
+            prev = cur;  // 更新 prev 为当前节点
+            cur = curNext;  // 移动到下一个节点
+        }
+        return newHead;
+    }
+
+    // 双指针法
+    public ListNode reverseList1(ListNode head) {
+        if (head == null) return null;
+        if (head.next == null) return head;
+        ListNode slowNode = head;
+        ListNode fastNode = head.next;
+        slowNode.next = null;
+        while (fastNode != null) {
+            ListNode nextNextNode = fastNode.next;
+            fastNode.next = slowNode;
+            slowNode = fastNode;
+            fastNode = nextNextNode;
+        }
+        return slowNode;
+    }
+
 }
