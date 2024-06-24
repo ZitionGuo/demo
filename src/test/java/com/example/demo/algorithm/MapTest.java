@@ -22,7 +22,11 @@ public class MapTest {
 //        System.out.println(majorityElement(new int[]{3,2,3}));
 //        System.out.println(majorityElement1(new int[]{3,4,5,5,4,4,5,5,5}));
 //        System.out.println(majorityElementSecondVersion(new int[]{6,6,5,5,3,4,6,5}));
-        System.out.println(isIsomorphic("paper", "title")); // 很麻烦
+//        System.out.println(isIsomorphic("paper", "title")); // 很麻烦
+//        System.out.println(containsNearbyDuplicate(new int[]{1,2,3,1}, 2)); //
+//        System.out.println(containsNearbyDuplicate1(new int[]{1,2,3,1}, 3)); // bad performance
+
+
     }
 
     // 输入：nums = [0,0,1,1,1,2,2,3,3,4] 输出：5, nums = [0,1,2,3,4]
@@ -217,5 +221,51 @@ public class MapTest {
 
         return true;
     }
+
+    // 1,0,1,1
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int key = nums[i];
+            Integer val = map.get(key);
+            if (val != null && i - val <= k) {
+                return true;
+            }
+            map.put(key, i);
+        }
+        return false;
+    }
+
+    public boolean containsNearbyDuplicate1(int[] nums, int k) {
+        HashMap<Integer, List<Integer>> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int key = nums[i];
+            List<Integer> val = map.get(key);
+            if (val != null) {
+                val.add(i);
+                map.put(key, val);
+            } else {
+                ArrayList<Integer> list = new ArrayList<>();
+                list.add(i);
+                map.put(key, list);
+            }
+        }
+        // 遍历 keySet，比较每组 list 元素间差值是否有 <= k 的
+        for (Integer key : map.keySet()) {
+            List<Integer> integers = map.get(key);
+            if (integers.size() == 1) {
+                continue;
+            }
+            for (int i = 0; i < integers.size() - 1; i++) {
+                if (integers.get(i+1) != null) {
+                    if (integers.get(i+1) - integers.get(i) <= k) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
 
 }

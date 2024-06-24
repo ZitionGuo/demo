@@ -223,4 +223,13 @@ public class TreeTest {
         int right = maxDepth(root.right);
         return Math.abs(left-right) <= 1;
     }
+
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> list = new ArrayList<>();
+        if (root.left == null && root.right == null) {
+            list.add(String.valueOf(root.val));
+            return list;
+        }
+        return list;
+    }
 }

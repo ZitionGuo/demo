@@ -43,7 +43,9 @@ public class LinkedListTest {
         listNode.next = new ListNode(2);
         listNode.next.next = new ListNode(3);
         listNode.next.next.next = new ListNode(4);
-        System.out.println(reverseList(listNode));
+//        System.out.println(reverseList(listNode));
+//        System.out.println(addTwoNumbers(listNode, listNode)); // wrong - 超过 int / long 最大长度后报错 NumberFormatException
+        System.out.println(addTwoNumbers1(listNode, listNode));
     }
 
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
@@ -284,6 +286,77 @@ public class LinkedListTest {
             fastNode = nextNextNode;
         }
         return slowNode;
+    }
+
+    /**
+     * 示例 1：
+     * 输入：l1 = [2,4,3], l2 = [5,6,4]
+     * 输出：[7,0,8]
+     * 解释：342 + 465 = 807.
+     *
+     * 示例 3：
+     * 输入：l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
+     * 输出：[8,9,9,9,0,0,0,1]
+     */
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        long num1 = getTotal(l1);
+        long num2 = getTotal(l2);
+        String total = String.valueOf(num1 + num2);
+        ListNode dummy = new ListNode();
+        ListNode listNode = new ListNode(total.charAt(0) - '0');
+        dummy.next = listNode;
+        int i = 1;
+        while (i < total.length()) {
+            listNode.next = new ListNode(total.charAt(i) - '0');
+            listNode = listNode.next;
+            i++;
+        }
+        return reverseList(dummy.next);
+    }
+
+    private long getTotal(ListNode node) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(node.val);
+        while (node.next != null) {
+            sb.append(node.next.val);
+            node = node.next;
+        }
+        return Long.parseLong(String.valueOf(sb.reverse()));
+    }
+
+    /**
+     * 示例 1：
+     * 输入：l1 = [2,4,3], l2 = [5,6,4]
+     * 输出：[7,0,8]
+     * 解释：342 + 465 = 807.
+     *
+     * 示例 3：
+     * 输入：l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
+     * 输出：[8,9,9,9,0,0,0,1]
+     */
+    public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
+        ListNode dummyHead = new ListNode(0);
+        ListNode p = l1, q = l2, curr = dummyHead;
+        int carry = 0;
+
+        while (p != null || q != null) {
+            int x = (p != null) ? p.val : 0;
+            int y = (q != null) ? q.val : 0;
+            int sum = carry + x + y;
+            carry = sum / 10;
+            curr.next = new ListNode(sum % 10);
+            curr = curr.next;
+            if (p != null) p = p.next;
+            if (q != null) q = q.next;
+        }
+
+        if (carry > 0) {
+            curr.next = new ListNode(carry);
+        }
+
+        return dummyHead.next;
     }
 
 }
