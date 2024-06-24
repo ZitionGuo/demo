@@ -224,6 +224,9 @@ public class TreeTest {
         return Math.abs(left-right) <= 1;
     }
 
+    /**
+     * 输入：root = [1,2,3,null,5] 输出：["1->2->5","1->3"]
+     */
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> list = new ArrayList<>();
         if (root.left == null && root.right == null) {
