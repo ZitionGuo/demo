@@ -2,6 +2,8 @@ package com.example.demo.algorithm;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 /**
  * @author guozixuan
  * @date 2024/6/14 14:19
@@ -11,17 +13,19 @@ public class DoublePointerTest {
     @Test
     public void test() {
 //        System.out.println(removeDuplicates1(new int[]{0,0,1,1,1,2,2,3,3,4}));
-        ListNode list1 = new ListNode(3);
-        ListNode list2 = new ListNode(1);
-        list1.next = list2;
-        ListNode list3 = new ListNode(2);
-        list2.next = list3;
-        ListNode list4 = new ListNode(5);
-        list3.next = list4;
-        ListNode list5 = new ListNode(6);
-        list4.next = list5;
-        list5.next = list2;
-        System.out.println(hasCycle(list1));
+//        ListNode list1 = new ListNode(3);
+//        ListNode list2 = new ListNode(1);
+//        list1.next = list2;
+//        ListNode list3 = new ListNode(2);
+//        list2.next = list3;
+//        ListNode list4 = new ListNode(5);
+//        list3.next = list4;
+//        ListNode list5 = new ListNode(6);
+//        list4.next = list5;
+//        list5.next = list2;
+//        System.out.println(hasCycle(list1));
+//        moveZeroes(new int[]{0,1,0,3,12});
+        System.out.println(longestPalindrome("abcdbdc"));
     }
 
     class ListNode {
@@ -110,4 +114,43 @@ public class DoublePointerTest {
         }
         return false; // 快指针到达链表末尾，说明不存在环
     }
+
+    /**
+     * 示例 1:
+     * 输入: nums = [0,1,0,3,12]
+     * 输出: [1,3,12,0,0]
+     */
+    public void moveZeroes(int[] nums) {
+        int length = nums.length;
+        if (length <= 1) {
+            return;
+        }
+//        int left = 0, right = length;
+//        while (left < right) {
+//            if (nums[left] == 0) {
+//                nums[left] = nums[right];
+//                nums[right--] = 0;
+//            } else {
+//                left++;
+//            }
+//        }
+//        System.out.println(Arrays.toString(nums)); // [12, 1, 3, 0, 0] 前移会有问题
+        int slow = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != 0) {
+                nums[slow] = nums[i]; // 慢指针一直按照非 0 值的顺序存储
+                slow++;
+            }
+        }
+        for (int j = slow; j < nums.length; j++) {
+            nums[j] = 0;
+        }
+        System.out.println(Arrays.toString(nums));
+    }
+
+    public String longestPalindrome(String s) {
+        return s;
+    }
+
+
 }
