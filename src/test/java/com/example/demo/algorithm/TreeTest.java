@@ -1,5 +1,6 @@
 package com.example.demo.algorithm;
 
+import org.apache.poi.ss.formula.functions.T;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -45,18 +46,28 @@ public class TreeTest {
 //        System.out.println(symmetricNode);
 //        System.out.println(isSymmetric(symmetricNode));
 //        System.out.println(maxDepth(a));
-        TreeNode preTreeNode = new TreeNode(2);
-        preTreeNode.left = new TreeNode(3);
-        preTreeNode.left.left = new TreeNode(1);
-        preTreeNode.left.right = new TreeNode(6);
-        preTreeNode.left.left.left = new TreeNode(7);
-        preTreeNode.left.left.right = new TreeNode(8);
-        preTreeNode.right = new TreeNode(4);
-        preTreeNode.right.left = new TreeNode(9);
-        preTreeNode.right.right = new TreeNode(10);
+//        TreeNode preTreeNode = new TreeNode(2);
+//        preTreeNode.left = new TreeNode(3);
+//        preTreeNode.left.left = new TreeNode(1);
+//        preTreeNode.left.right = new TreeNode(6);
+//        preTreeNode.left.left.left = new TreeNode(7);
+//        preTreeNode.left.left.right = new TreeNode(8);
+//        preTreeNode.right = new TreeNode(4);
+//        preTreeNode.right.left = new TreeNode(9);
+//        preTreeNode.right.right = new TreeNode(10);
 //        System.out.println(preorderTraversal(preTreeNode)); // [2, 3, 1, 7, 8, 6, 4, 9, 10]
 //        System.out.println(postorderTraversal(preTreeNode));
-        System.out.println(isBalanced(preTreeNode));
+//        System.out.println(isBalanced(preTreeNode));
+//        System.out.println(binaryTreePaths(preTreeNode));
+//        System.out.println(minDepth(preTreeNode));
+        TreeNode treeNode = new TreeNode(2);
+        treeNode.left = new TreeNode(4);
+        treeNode.right = new TreeNode(6);
+        treeNode.right.left = new TreeNode(8);
+        treeNode.right.left.left = new TreeNode(9);
+        treeNode.right.right = new TreeNode(7);
+        System.out.println(treeNode);
+        System.out.println(minDepth1(treeNode));
     }
 
     class TreeNode {
@@ -221,7 +232,7 @@ public class TreeTest {
         }
         int left = maxDepth(root.left);
         int right = maxDepth(root.right);
-        return Math.abs(left-right) <= 1;
+        return Math.abs(left - right) <= 1;
     }
 
     /**
@@ -229,10 +240,64 @@ public class TreeTest {
      */
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> list = new ArrayList<>();
-        if (root.left == null && root.right == null) {
-            list.add(String.valueOf(root.val));
-            return list;
-        }
+        dfs(root, "", list);
         return list;
     }
+
+    private void dfs(TreeNode root, String path, List<String> list) {
+        if (root == null) {
+            return;
+        }
+        path += root.val;
+        if (root.right == null && root.left == null) {
+            list.add(path);
+        } else {
+            path += "->";
+            dfs(root.right, path, list);
+            dfs(root.left, path, list);
+        }
+    }
+
+    /**
+     * 示例 1：
+     * 输入：root = [3,9,20,null,null,15,7]
+     * 输出：2
+     * <p>
+     * 示例 2：
+     * 输入：root = [2,null,3,null,4,null,5,null,6]
+     * 输出：5
+     */
+    public int minDepth(TreeNode root) {
+        if (root == null) return 0;
+        // 这道题递归条件里分为三种情况
+        // 1.左孩子和有孩子都为空的情况，说明到达了叶子节点，直接返回1即可
+        if (root.left == null && root.right == null) return 1;
+        // 2.如果左孩子和由孩子其中一个为空，那么需要返回比较大的那个孩子的深度
+        int m1 = minDepth(root.left);
+        int m2 = minDepth(root.right);
+        // 这里其中一个节点为空，说明m1和m2有一个必然为0，所以可以返回m1 + m2 + 1;
+        if (root.left == null || root.right == null) return m1 + m2 + 1;
+
+        // 3.最后一种情况，也就是左右孩子都不为空，返回最小深度+1即可
+        return Math.min(m1, m2) + 1;
+    }
+
+    public int minDepth1(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        if (root.left == null && root.right == null) {
+            return 1;
+        }
+        int min_depth = Integer.MAX_VALUE;
+        if (root.left != null) {
+            min_depth = Math.min(minDepth1(root.left), min_depth); // 1
+        }
+        if (root.right != null) {
+            min_depth = Math.min(minDepth1(root.right), min_depth);
+        }
+        return min_depth + 1;
+    }
+
+
 }
