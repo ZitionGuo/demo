@@ -2,13 +2,7 @@ package com.example.demo.algorithm;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author guozixuan
@@ -25,7 +19,7 @@ public class MapTest {
 //        System.out.println(isIsomorphic("paper", "title")); // 很麻烦
 //        System.out.println(containsNearbyDuplicate(new int[]{1,2,3,1}, 2)); //
 //        System.out.println(containsNearbyDuplicate1(new int[]{1,2,3,1}, 3)); // bad performance
-
+        System.out.println(lengthOfLongestSubstring("abcabcbb"));
 
     }
 
@@ -267,5 +261,29 @@ public class MapTest {
         return false;
     }
 
+    /**
+     * 解答失败:
+     * 	测试用例:"pwwkew"
+     * 	测试结果:2
+     * 	期望结果:3
+     * 	stdout:
+     */
+    public int lengthOfLongestSubstring(String s) {
+        HashSet<Character> set = new HashSet<>();
+        int longestLength = 0;
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char key = s.charAt(i);
+            if (set.contains(key)) {
+                longestLength = Math.max(longestLength, count);
+                count = 0;
+                set.clear();
+            } else {
+                set.add(key);
+                count++;
+            }
+        }
+        return longestLength;
+    }
 
 }
