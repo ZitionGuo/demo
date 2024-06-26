@@ -19,7 +19,7 @@ public class MapTest {
 //        System.out.println(isIsomorphic("paper", "title")); // 很麻烦
 //        System.out.println(containsNearbyDuplicate(new int[]{1,2,3,1}, 2)); //
 //        System.out.println(containsNearbyDuplicate1(new int[]{1,2,3,1}, 3)); // bad performance
-        System.out.println(lengthOfLongestSubstring("abcabcbb"));
+        System.out.println(lengthOfLongestSubstring("pwwkew"));
 
     }
 
@@ -264,24 +264,22 @@ public class MapTest {
     /**
      * 解答失败:
      * 	测试用例:"pwwkew"
-     * 	测试结果:2
+     * 	测试结果:4
      * 	期望结果:3
      * 	stdout:
      */
     public int lengthOfLongestSubstring(String s) {
         HashSet<Character> set = new HashSet<>();
         int longestLength = 0;
-        int count = 0;
-        for (int i = 0; i < s.length(); i++) {
-            char key = s.charAt(i);
+        int left = 0;
+        for (int right = 0; right < s.length(); right++) {
+            char key = s.charAt(right);
             if (set.contains(key)) {
-                longestLength = Math.max(longestLength, count);
-                count = 0;
-                set.clear();
-            } else {
-                set.add(key);
-                count++;
+                set.remove(s.charAt(left));
+                left++;
             }
+            set.add(key);
+            longestLength = Math.max(longestLength, right - left + 1);
         }
         return longestLength;
     }
