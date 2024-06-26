@@ -274,6 +274,7 @@ public class MapTest {
         int left = 0;
         for (int right = 0; right < s.length(); right++) {
             char key = s.charAt(right);
+            // core
             while (set.contains(key)) {
                 set.remove(s.charAt(left));
                 left++;
