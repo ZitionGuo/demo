@@ -279,6 +279,8 @@ public class MapTest {
                 left++;
             }
             set.add(key);
+            System.out.println(set);
+            System.out.println("right: "+right+", left: "+left);
             longestLength = Math.max(longestLength, right - left + 1);
         }
         return longestLength;
