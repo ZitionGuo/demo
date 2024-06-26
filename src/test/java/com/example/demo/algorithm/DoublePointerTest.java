@@ -25,7 +25,8 @@ public class DoublePointerTest {
 //        list5.next = list2;
 //        System.out.println(hasCycle(list1));
 //        moveZeroes(new int[]{0,1,0,3,12});
-        System.out.println(longestPalindrome("abcdbdc"));
+//        System.out.println(longestPalindrome("abcdbdc"));
+        System.out.println(maxArea(new int[]{1,8,6,2,5,4,8,3,7}));
     }
 
     class ListNode {
@@ -150,6 +151,10 @@ public class DoublePointerTest {
 
     public String longestPalindrome(String s) {
         return s;
+    }
+
+    public int maxArea(int[] height) {
+        return 0;
     }
 
 

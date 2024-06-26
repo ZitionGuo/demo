@@ -43,9 +43,11 @@ public class LinkedListTest {
         listNode.next = new ListNode(2);
         listNode.next.next = new ListNode(3);
         listNode.next.next.next = new ListNode(4);
+        listNode.next.next.next.next = new ListNode(5);
 //        System.out.println(reverseList(listNode));
 //        System.out.println(addTwoNumbers(listNode, listNode)); // wrong - 超过 int / long 最大长度后报错 NumberFormatException
-        System.out.println(addTwoNumbers1(listNode, listNode));
+//        System.out.println(addTwoNumbers1(listNode, listNode));
+        System.out.println(reverseBetween(listNode, 2,4));
     }
 
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
@@ -287,6 +289,43 @@ public class LinkedListTest {
         }
         return slowNode;
     }
+
+    /**
+     * 输入：head = [1,2,3,4,5], left = 2, right = 4
+     * 输出：[1,4,3,2,5]
+     * 示例 2：
+     */
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        // 找到 left 前的节点
+        ListNode pre = dummy;
+        for (int i = 0; i < left - 1; i++) {
+            pre = pre.next;
+        }
+
+        // 开始反转的节点
+        ListNode start = pre.next;
+        // 要反转的第一个节点的下一个节点
+        ListNode then = start.next;
+        /**
+         * pre: 12345
+         * start: 2345 - 245
+         * then: 345 - 3245
+         */
+        for (int i = 0; i < right - left; i++) {
+            System.out.println("pre1" + pre);
+            start.next = then.next;
+            System.out.println("pre2" + pre);
+            then.next = pre.next;
+            pre.next = then;
+            then = start.next;
+        }
+        return dummy.next;
+    }
+
+
 
     /**
      * 示例 1：
