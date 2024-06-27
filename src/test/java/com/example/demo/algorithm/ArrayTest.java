@@ -2,7 +2,9 @@ package com.example.demo.algorithm;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author guozixuan
@@ -19,7 +21,8 @@ public class ArrayTest {
 //        System.out.println(Arrays.toString(plusOne1(new int[]{9,8,9})));
 //        System.out.println(maxProfit(new int[]{7,1,5,3,6,4})); // 长度很大超时。。。
 //        System.out.println(maxProfit1(new int[]{7,1,5,3,6,4}));
-        System.out.println(isPalindrome("A man, a plan, a canal: Panama"));
+//        System.out.println(isPalindrome("A man, a plan, a canal: Panama"));
+        System.out.println(permute(new int[]{1,2,3,4}));
 
     }
 
@@ -223,5 +226,35 @@ public class ArrayTest {
             right--;
         }
         return true;
+    }
+
+    /**
+     * 全排列 dizzy
+     * 示例 1：
+     * 输入：nums = [1,2,3]
+     * 输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]] 2*3
+     * 1234 1243 1324 1342 1423 1432 6*4
+     */
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        backtrack(result, new ArrayList<>(), nums);
+        return result;
+    }
+
+    private void backtrack(List<List<Integer>> result, List<Integer> tempList, int[] nums) {
+        if (tempList.size() == nums.length) {
+            result.add(new ArrayList<>(tempList));
+        } else {
+            for (int num : nums) {
+                if (tempList.contains(num)) {
+                    continue; // 已经包含的数字不再添加
+                }
+                tempList.add(num);
+                backtrack(result, tempList, nums);
+                System.out.println("before:" + tempList);
+                tempList.remove(tempList.size() - 1);
+                System.out.println("after:" + tempList);
+            }
+        }
     }
 }

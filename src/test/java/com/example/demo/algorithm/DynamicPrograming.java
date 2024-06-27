@@ -14,6 +14,7 @@ public class DynamicPrograming {
     @Test
     public void test() {
         System.out.println(generate(6));
+        System.out.println(minDistance("intention", "execution"));
     }
 
     public List<List<Integer>> generate(int numRows) {
@@ -36,5 +37,27 @@ public class DynamicPrograming {
             result.add(list);
         }
         return result;
+    }
+
+    /**
+     * word1 转为 word2
+     * 示例 2：
+     * 输入：word1 = "intention", word2 = "execution"
+     * 输出：5
+     * 解释：
+     * intention -> inention (删除 't')
+     * inention -> enention (将 'i' 替换为 'e')
+     * enention -> exention (将 'n' 替换为 'x')
+     * exention -> exection (将 'n' 替换为 'c')
+     * exection -> execution (插入 'u')
+     */
+    public int minDistance(String word1, String word2) {
+        int count = 0;
+        if (word1.equals(word2)) return 0;
+        count += Math.abs(word1.length() - word2.length());
+        if (word1.length() > word2.length()) {
+
+        }
+        return count;
     }
 }
