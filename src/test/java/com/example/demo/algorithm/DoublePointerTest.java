@@ -153,8 +153,19 @@ public class DoublePointerTest {
         return s;
     }
 
+    // 1,8,6,2,5,4,8,3,7 -> 7*7 = 49
     public int maxArea(int[] height) {
-        return 0;
+        int left = 0, right = height.length - 1;
+        int maxArea = 0;
+        while (left < right) {
+            maxArea = Math.max(maxArea, Math.min(height[left], height[right]) * (right - left));
+            if (height[left] <= height[right]) {
+                ++left;
+            } else {
+                --right;
+            }
+        }
+        return maxArea;
     }
 
 
