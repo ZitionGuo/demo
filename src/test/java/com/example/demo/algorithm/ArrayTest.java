@@ -251,9 +251,17 @@ public class ArrayTest {
                 }
                 tempList.add(num);
                 backtrack(result, tempList, nums);
-                System.out.println("before:" + tempList);
                 tempList.remove(tempList.size() - 1);
-                System.out.println("after:" + tempList);
+            }
+        }
+    }
+
+    @Test
+    public void testTwoDimension() {
+        int[][] num = {{1, 2, 3, 4, 5}, {6, 7, 8, 9, 10}};    //创建二维数组并赋值
+        for (int i = 0; i < num.length; i++) {             //for循环遍历输出数组
+            for (int j = 0; j < num[i].length; j++) {
+                System.out.print(num[i][j] + " ");
             }
         }
     }

@@ -3,6 +3,8 @@ package com.example.demo.algorithm;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author guozixuan
@@ -26,7 +28,9 @@ public class DoublePointerTest {
 //        System.out.println(hasCycle(list1));
 //        moveZeroes(new int[]{0,1,0,3,12});
 //        System.out.println(longestPalindrome("abcdbdc"));
-        System.out.println(maxArea(new int[]{1,8,6,2,5,4,8,3,7}));
+//        System.out.println(maxArea(new int[]{1,8,6,2,5,4,8,3,7}));
+//        reverseString(new char[]{'h', 'e', 'l', 'l', 'o'});
+        System.out.println(reverseVowels(".,"));
     }
 
     class ListNode {
@@ -53,6 +57,7 @@ public class DoublePointerTest {
                     '}';
         }
     }
+
     // [0,0,1,1,1,2,2,3,3,4] 输出：5, nums = [0,1,2,3,4]
     public int removeDuplicates1(int[] nums) {
         if (nums == null || nums.length == 0) return 0;
@@ -168,5 +173,39 @@ public class DoublePointerTest {
         return maxArea;
     }
 
+    public void reverseString(char[] s) {
+        int left = 0;
+        int right = s.length - 1;
+        while (left < right) {
+            char temp = s[left];
+            s[left] = s[right];
+            s[right] = temp;
+            left++;
+            right--;
+        }
+        System.out.println(Arrays.toString(s));
+    }
 
+    public String reverseVowels(String s) {
+        int left = 0;
+        int right = s.length() - 1;
+        String vowels = "aeiouAEIOU";
+        StringBuilder sb = new StringBuilder(s);
+        while (left < right) {
+            while (!vowels.contains(s.charAt(left) + "")) {
+                ++left;
+                if (left <= right) break;
+            }
+            while (!vowels.contains(s.charAt(right) + "")) {
+                --right;
+                if (right > left) break;
+            }
+            char temp = s.charAt(left);
+            sb.setCharAt(left, s.charAt(right));
+            sb.setCharAt(right, temp);
+            left++;
+            right--;
+        }
+        return sb.toString();
+    }
 }
