@@ -14,7 +14,8 @@ public class MathTest {
     public void test() {
 //        System.out.println(accountBalanceAfterPurchase(18));
 //        System.out.println(isHappy(19)); // 非快乐数即超时
-        System.out.println(isHappy1(19)); // 哈希
+//        System.out.println(isHappy1(19)); // 哈希
+        System.out.println(isPowerOfFour(16));
     }
 
     public int accountBalanceAfterPurchase(int purchaseAmount) {
@@ -67,6 +68,16 @@ public class MathTest {
             n /= 10;
         }
         return k;
+    }
+
+    public boolean isPowerOfFour(int n) {
+        if (n <= 0) return false;
+        if (n == 1) return true;
+        if (n % 4 == 0) {
+            return isPowerOfFour(n / 4);
+        } else {
+            return false;
+        }
     }
 
 }
