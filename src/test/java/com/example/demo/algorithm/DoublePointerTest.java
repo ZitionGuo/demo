@@ -208,4 +208,34 @@ public class DoublePointerTest {
         }
         return sb.toString();
     }
+
+    // GPT 优化版
+    public String reverseVowels1(String s) {
+        int left = 0;
+        int right = s.length() - 1;
+        String vowels = "aeiouAEIOU";
+        StringBuilder sb = new StringBuilder(s);
+
+        while (left < right) {
+            // 使用 while 循环来找到左边第一个元音
+            while (left < right && vowels.indexOf(s.charAt(left)) == -1) {
+                left++;
+            }
+            // 使用 while 循环来找到右边第一个元音
+            while (left < right && vowels.indexOf(s.charAt(right)) == -1) {
+                right--;
+            }
+
+            // 交换元音
+            if (left < right) {
+                char temp = s.charAt(left);
+                sb.setCharAt(left, s.charAt(right));
+                sb.setCharAt(right, temp);
+                left++;
+                right--;
+            }
+        }
+
+        return sb.toString();
+    }
 }
