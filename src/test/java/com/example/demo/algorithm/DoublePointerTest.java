@@ -192,13 +192,13 @@ public class DoublePointerTest {
         String vowels = "aeiouAEIOU";
         StringBuilder sb = new StringBuilder(s);
         while (left < right) {
-            while (!vowels.contains(s.charAt(left) + "")) {
+            if (!vowels.contains(s.charAt(left) + "")) {
                 ++left;
-                if (left <= right) break;
+                continue;
             }
-            while (!vowels.contains(s.charAt(right) + "")) {
+            if (!vowels.contains(s.charAt(right) + "")) {
                 --right;
-                if (right > left) break;
+                continue;
             }
             char temp = s.charAt(left);
             sb.setCharAt(left, s.charAt(right));
