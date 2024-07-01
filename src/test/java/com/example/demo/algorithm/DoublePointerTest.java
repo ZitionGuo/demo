@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
@@ -16,23 +17,25 @@ public class DoublePointerTest {
     @Test
     public void test() {
 //        System.out.println(removeDuplicates1(new int[]{0,0,1,1,1,2,2,3,3,4}));
-//        ListNode list1 = new ListNode(3);
-//        ListNode list2 = new ListNode(1);
-//        list1.next = list2;
-//        ListNode list3 = new ListNode(2);
-//        list2.next = list3;
-//        ListNode list4 = new ListNode(5);
-//        list3.next = list4;
-//        ListNode list5 = new ListNode(6);
-//        list4.next = list5;
-//        list5.next = list2;
+        ListNode list1 = new ListNode(3);
+        ListNode list2 = new ListNode(1);
+        list1.next = list2;
+        ListNode list3 = new ListNode(2);
+        list2.next = list3;
+        ListNode list4 = new ListNode(5);
+        list3.next = list4;
+        ListNode list5 = new ListNode(6);
+        list4.next = list5;
+        list5.next = list2;
 //        System.out.println(hasCycle(list1));
 //        moveZeroes(new int[]{0,1,0,3,12});
 //        System.out.println(longestPalindrome("abcdbdc"));
 //        System.out.println(maxArea(new int[]{1,8,6,2,5,4,8,3,7}));
 //        reverseString(new char[]{'h', 'e', 'l', 'l', 'o'});
 //        System.out.println(reverseVowels(".,"));
-        System.out.println(longestPalindrome("babad"));
+//        System.out.println(longestPalindrome("babad"));
+        System.out.println(detectCycle1(list1));
+//        System.out.println(detectCycle(list1));
     }
 
     class ListNode {
@@ -54,9 +57,7 @@ public class DoublePointerTest {
         @Override
         public String toString() {
             return "ListNode{" +
-                    "val=" + val +
-                    ", next=" + next +
-                    '}';
+                    "val=" + val + '}';
         }
     }
 
@@ -272,5 +273,40 @@ public class DoublePointerTest {
         }
 
         return sb.toString();
+    }
+
+    public ListNode detectCycle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;        // 慢指针每次移动一步
+            fast = fast.next.next;   // 快指针每次移动两步
+            // 相遇说明有环
+            if (slow == fast) {
+                ListNode index1 = fast;
+                ListNode index2 = head;
+                while (index1 != index2) {
+                    index1 = index1.next;
+                    index2 = index2.next;
+                }
+                return index1; //找到环入口，返回
+            }
+        }
+        return null;
+    }
+
+    // 哈希
+    public ListNode detectCycle1(ListNode head) {
+        HashSet<ListNode> set = new HashSet<>();
+        ListNode node = head;
+        while (node != null) {
+            if (!set.contains(node)) {
+                set.add(node);
+                node = node.next;
+            } else {
+                return node;
+            }
+        }
+        return null;
     }
 }
