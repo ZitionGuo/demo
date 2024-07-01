@@ -22,7 +22,7 @@ public class ArrayTest {
 //        System.out.println(maxProfit(new int[]{7,1,5,3,6,4})); // 长度很大超时。。。
 //        System.out.println(maxProfit1(new int[]{7,1,5,3,6,4}));
 //        System.out.println(isPalindrome("A man, a plan, a canal: Panama"));
-        System.out.println(permute(new int[]{1,2,3,4}));
+        System.out.println(permute(new int[]{1, 2, 3, 4}));
 
     }
 
@@ -104,7 +104,7 @@ public class ArrayTest {
     }
 
     public int[] plusOne(int[] digits) {
-        digits[digits.length- 1] = digits[digits.length- 1] + 1;
+        digits[digits.length - 1] = digits[digits.length - 1] + 1;
         return digits;
     }
 
@@ -137,7 +137,7 @@ public class ArrayTest {
     public int maxProfit(int[] prices) {
         int result = 0;
         for (int i = 0; i < prices.length; i++) {
-            for (int j = i+1; j < prices.length; j++) {
+            for (int j = i + 1; j < prices.length; j++) {
                 System.out.println("i: " + i + ", j: " + j);
                 if (prices[i] > prices[j]) {
                     continue;
@@ -155,19 +155,19 @@ public class ArrayTest {
      * 简单来说:是如下的情况(实际会比较的多一点,但是不影响总体)
      * 首先,minPrice = 2 / profit = 6-2 = 4
      * 然后找到一个更小的minPrice = 1  之后计算出来的profit = 4-1 = 3
-     *
+     * <p>
      * 最后比较两个profit,谁更大就取谁!  这才是关键,谁更大就取谁!
-     *
+     * <p>
      * 等于将股价分为多段--->
      * 条件:要求每段都是升序,并且后面的价格段中minPrice比前面的minPrice更小,后面的价格段以minPrice开头
-     *
+     * <p>
      * 例如3,100,2,99,1,90 --> 这样算法就将这段数字分为三段,[3,100] [2,99] [1,90],
      * 然后分别计算他们的profit,最后比较它们的大小,取最大的profit,返回
-     *
+     * <p>
      * 换个例子,如果是这样的情况:[7,2,10,3,1,40]
      * 那么就分为[7,2,10,3] [1,40]
      * 第一段是最佳profit是8, 第二段的最佳profit是39,最后比较它们,取更大值39
-     *
+     * <p>
      * 这即为动态规划的思路,求解多段问题,记录前面的最优解,然后与现在的最优解进行比较交换,最后剩下的就是最优解答案
      */
     public int maxProfit1(int[] prices) {
@@ -195,12 +195,9 @@ public class ArrayTest {
 
     /**
      * 示例 1：
-     *
      * 输入: s = "A man, a plan, a canal: Panama"
      * 输出：true
      * 解释："amanaplanacanalpanama" 是回文串。
-     * 示例 2：
-     *
      */
     public boolean isPalindrome(String s) {
         if (s.isEmpty()) {
@@ -217,7 +214,7 @@ public class ArrayTest {
         }
         System.out.println(sb);
         int left = 0;
-        int right = sb.length()-1;
+        int right = sb.length() - 1;
         while (left < right) {
             if (sb.charAt(left) != sb.charAt(right)) {
                 return false;

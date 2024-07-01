@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  * @author guozixuan
@@ -30,7 +31,8 @@ public class DoublePointerTest {
 //        System.out.println(longestPalindrome("abcdbdc"));
 //        System.out.println(maxArea(new int[]{1,8,6,2,5,4,8,3,7}));
 //        reverseString(new char[]{'h', 'e', 'l', 'l', 'o'});
-        System.out.println(reverseVowels(".,"));
+//        System.out.println(reverseVowels(".,"));
+        System.out.println(longestPalindrome("babad"));
     }
 
     class ListNode {
@@ -154,8 +156,41 @@ public class DoublePointerTest {
         System.out.println(Arrays.toString(nums));
     }
 
-    public String longestPalindrome(String s) {
-        return s;
+    /**
+     * answered by gpt
+     * 示例 1：
+     * 输入：s = "babad"
+     * 输出："bab"
+     * 解释："aba" 同样是符合题意的答案。
+     * <p>
+     * 示例 2：
+     * 输入：s = "cbbd"
+     * 输出："bb"
+     */
+    public static String longestPalindrome(String s) {
+        if (s == null || s.isEmpty()) return "";
+
+        int start = 0, end = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = expandAroundCenter(s, i, i); // 奇数长度回文
+            int len2 = expandAroundCenter(s, i, i + 1); // 偶数长度回文
+            int len = Math.max(len1, len2);
+            if (len > end - start) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
+            }
+        }
+        return s.substring(start, end + 1);
+    }
+
+    private static int expandAroundCenter(String s, int left, int right) {
+        System.out.println(left);
+        System.out.println(right);
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        return right - left - 1;
     }
 
     // 1,8,6,2,5,4,8,3,7 -> 7*7 = 49
