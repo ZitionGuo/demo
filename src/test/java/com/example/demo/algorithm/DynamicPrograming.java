@@ -12,12 +12,15 @@ import java.util.List;
  */
 public class DynamicPrograming {
 
+    static Integer min = Integer.MAX_VALUE;
+
     @Test
     public void test() {
 //        System.out.println(generate(6));
 //        System.out.println(minDistance("intention", "execution"));
 //        System.out.println(coinChange(new int[]{1, 2, 5}, 11)); // wrong answer -- 贪心是错的，要用动态规划
-        System.out.println(coinChange1(new int[]{1, 2, 5}, 11));
+//        System.out.println(coinChange1(new int[]{1, 2, 5}, 11));
+        System.out.println(getMinCoins(new int[]{1}, 2));
     }
 
     public List<List<Integer>> generate(int numRows) {
@@ -119,5 +122,44 @@ public class DynamicPrograming {
 
         // 如果dp[amount]仍然是初始值，表示无法凑成该金额，返回-1
         return dp[amount] > amount ? -1 : dp[amount];
+    }
+
+    private static int getMinCoins(int[] coins, int amount) {
+        //把一些不可能的过滤掉
+        if (amount == 0) {//需要凑的amount==0 不需要凑 直接返回0个
+            return 0;
+        }
+        if (coins == null || coins.length == 0) {//没有coins让你选 直接return -1
+            return -1;
+        }
+        if (coins.length == 1 && amount % coins[0] != 0) {
+            return -1;
+        }
+        process(coins, 0, amount, 0);
+        return min == Integer.MAX_VALUE ? -1 : min;
+    }
+
+    /**
+     * 从左往右去选择，conins[index]任意张 直到达到rest，统计凑成功的货币数
+     *
+     * @param coins 货币数组
+     * @param index 正在尝试的coins[]的下标
+     * @param rest  开始时rest==amount, 当使用coins[index]货币n张时候，rest-conins[index]*n,当走完整个coins[],如果reset==0表明凑成功了
+     */
+    private static void process(int[] coins, int index, int rest, int totalZhang) {
+        if (index == coins.length) {//已经走完整个coins,如果reset!=0则此方案不通retun,如果rest==0表明成的一种方案可以统计当前方案的总张数
+            if (rest == 0) {
+                min = Math.min(totalZhang, min);
+            }
+            return;
+        }
+        if (rest < 0) {//凑过头了 无效返回
+            return;
+        }
+
+        for (int zhang = 0; zhang * coins[index] <= rest; zhang++) {
+            process(coins, index + 1, rest - coins[index] * zhang, totalZhang + zhang);
+        }
+
     }
 }
