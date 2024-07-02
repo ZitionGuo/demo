@@ -20,7 +20,7 @@ public class DynamicPrograming {
 //        System.out.println(minDistance("intention", "execution"));
 //        System.out.println(coinChange(new int[]{1, 2, 5}, 11)); // wrong answer -- 贪心是错的，要用动态规划
 //        System.out.println(coinChange1(new int[]{1, 2, 5}, 11));
-        System.out.println(getMinCoins(new int[]{1}, 2));
+        System.out.println(getMinCoins(new int[]{1, 2, 5}, 11));
     }
 
     public List<List<Integer>> generate(int numRows) {
@@ -144,10 +144,10 @@ public class DynamicPrograming {
      *
      * @param coins 货币数组
      * @param index 正在尝试的coins[]的下标
-     * @param rest  开始时rest==amount, 当使用coins[index]货币n张时候，rest-conins[index]*n,当走完整个coins[],如果reset==0表明凑成功了
+     * @param rest  开始时rest==amount, 当使用coins[index]货币n张时候，rest-coins[index]*n,当走完整个coins[],如果reset==0表明凑成功了
      */
     private static void process(int[] coins, int index, int rest, int totalZhang) {
-        if (index == coins.length) {//已经走完整个coins,如果reset!=0则此方案不通retun,如果rest==0表明成的一种方案可以统计当前方案的总张数
+        if (index == coins.length) {//已经走完整个coins,如果reset!=0则此方案不通return,如果rest==0表明成的一种方案可以统计当前方案的总张数
             if (rest == 0) {
                 min = Math.min(totalZhang, min);
             }

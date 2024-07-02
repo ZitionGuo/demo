@@ -15,18 +15,18 @@ public class TreeTest {
 
     @Test
     public void test() {
-//        TreeNode treeNode = new TreeNode(2);
-//        TreeNode left = new TreeNode(3);
-//        treeNode.left = left;
-//        treeNode.right = new TreeNode(4);
-//        treeNode.right.left = new TreeNode(9);
-//        treeNode.right.right = new TreeNode(10);
-//        left.left = new TreeNode(1);
-//        left.right = new TreeNode(6);
-//        left.left.left = new TreeNode(7);
-//        left.left.right = new TreeNode(8);
-//        System.out.println(treeNode);
-//        System.out.println(inorderTraversal(treeNode));
+        TreeNode treeNode = new TreeNode(2);
+        TreeNode left = new TreeNode(3);
+        treeNode.left = left;
+        treeNode.right = new TreeNode(4);
+        treeNode.right.left = new TreeNode(9);
+        treeNode.right.right = new TreeNode(10);
+        left.left = new TreeNode(1);
+        left.right = new TreeNode(6);
+        left.left.left = new TreeNode(7);
+        left.left.right = new TreeNode(8);
+        System.out.println(treeNode);
+        System.out.println(inorderTraversal(treeNode));
 //        System.out.println(inorderTraversal1(treeNode));
 //        TreeNode a = new TreeNode(1);
 //        a.left = new TreeNode(1);
@@ -60,14 +60,14 @@ public class TreeTest {
 //        System.out.println(isBalanced(preTreeNode));
 //        System.out.println(binaryTreePaths(preTreeNode));
 //        System.out.println(minDepth(preTreeNode));
-        TreeNode treeNode = new TreeNode(2);
-        treeNode.left = new TreeNode(4);
-        treeNode.right = new TreeNode(6);
-        treeNode.right.left = new TreeNode(8);
-        treeNode.right.left.left = new TreeNode(9);
-        treeNode.right.right = new TreeNode(7);
-        System.out.println(treeNode);
-        System.out.println(minDepth1(treeNode));
+//        TreeNode treeNode = new TreeNode(2);
+//        treeNode.left = new TreeNode(4);
+//        treeNode.right = new TreeNode(6);
+//        treeNode.right.left = new TreeNode(8);
+//        treeNode.right.left.left = new TreeNode(9);
+//        treeNode.right.right = new TreeNode(7);
+//        System.out.println(treeNode);
+//        System.out.println(minDepth1(treeNode));
     }
 
     class TreeNode {

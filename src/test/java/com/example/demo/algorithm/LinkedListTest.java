@@ -39,15 +39,19 @@ public class LinkedListTest {
 //        listNode.next.next.next.next.next.next = new ListNode(6);
 //        System.out.println(removeElements(listNode, 6));
 //        System.out.println(removeElements1(listNode, 6));
-        ListNode listNode = new ListNode(1);
-        listNode.next = new ListNode(2);
-        listNode.next.next = new ListNode(3);
-        listNode.next.next.next = new ListNode(4);
-        listNode.next.next.next.next = new ListNode(5);
+//        ListNode listNode = new ListNode(1);
+//        listNode.next = new ListNode(2);
+//        listNode.next.next = new ListNode(3);
+//        listNode.next.next.next = new ListNode(4);
+//        listNode.next.next.next.next = new ListNode(5);
 //        System.out.println(reverseList(listNode));
 //        System.out.println(addTwoNumbers(listNode, listNode)); // wrong - 超过 int / long 最大长度后报错 NumberFormatException
 //        System.out.println(addTwoNumbers1(listNode, listNode));
-        System.out.println(reverseBetween(listNode, 2,4));
+//        System.out.println(reverseBetween(listNode, 2,4));
+        ListNode listNode = new ListNode(1);
+        listNode.next = new ListNode(2);
+        listNode.next.next = new ListNode(2);
+        listNode.next.next.next = new ListNode(1);
     }
 
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
@@ -396,6 +400,27 @@ public class LinkedListTest {
         }
 
         return dummyHead.next;
+    }
+
+    // 1221 true
+    // 依托 StringBuilder，采用双指针，Stack 类似，pop 弹出顶部元素比较
+    public boolean isPalindrome(ListNode head) {
+        if (head == null || head.next == null) return true;
+        StringBuilder sb = new StringBuilder();
+        while (head != null) {
+            sb.append(head.val);
+            head = head.next;
+        }
+        int left = 0, right = sb.length() - 1;
+        while (left < right) {
+            if (sb.charAt(left) == sb.charAt(right)) {
+                left++;
+                right--;
+            } else {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
