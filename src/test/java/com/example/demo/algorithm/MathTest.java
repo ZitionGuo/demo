@@ -15,7 +15,8 @@ public class MathTest {
 //        System.out.println(accountBalanceAfterPurchase(18));
 //        System.out.println(isHappy(19)); // 非快乐数即超时
 //        System.out.println(isHappy1(19)); // 哈希
-        System.out.println(isPowerOfFour(16));
+//        System.out.println(isPowerOfFour(16));
+        System.out.println(sumOfTheDigitsOfHarshadNumber(18));
     }
 
     public int accountBalanceAfterPurchase(int purchaseAmount) {
@@ -78,6 +79,15 @@ public class MathTest {
         } else {
             return false;
         }
+    }
+
+    public int sumOfTheDigitsOfHarshadNumber(int x) {
+        String s = String.valueOf(x);
+        int temp = 0;
+        for (int i = 0; i < s.length(); i++) {
+            temp += s.charAt(i) - '0';
+        }
+        return x % temp == 0 ? temp : -1;
     }
 
 }
