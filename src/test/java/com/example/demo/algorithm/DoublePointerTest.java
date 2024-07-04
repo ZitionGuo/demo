@@ -17,16 +17,16 @@ public class DoublePointerTest {
     @Test
     public void test() {
 //        System.out.println(removeDuplicates1(new int[]{0,0,1,1,1,2,2,3,3,4}));
-        ListNode list1 = new ListNode(3);
-        ListNode list2 = new ListNode(1);
-        list1.next = list2;
-        ListNode list3 = new ListNode(2);
-        list2.next = list3;
-        ListNode list4 = new ListNode(5);
-        list3.next = list4;
-        ListNode list5 = new ListNode(6);
-        list4.next = list5;
-        list5.next = list2;
+//        ListNode list1 = new ListNode(3);
+//        ListNode list2 = new ListNode(1);
+//        list1.next = list2;
+//        ListNode list3 = new ListNode(2);
+//        list2.next = list3;
+//        ListNode list4 = new ListNode(5);
+//        list3.next = list4;
+//        ListNode list5 = new ListNode(6);
+//        list4.next = list5;
+//        list5.next = list2;
 //        System.out.println(hasCycle(list1));
 //        moveZeroes(new int[]{0,1,0,3,12});
 //        System.out.println(longestPalindrome("abcdbdc"));
@@ -34,8 +34,9 @@ public class DoublePointerTest {
 //        reverseString(new char[]{'h', 'e', 'l', 'l', 'o'});
 //        System.out.println(reverseVowels(".,"));
 //        System.out.println(longestPalindrome("babad"));
-        System.out.println(detectCycle1(list1));
+//        System.out.println(detectCycle1(list1));
 //        System.out.println(detectCycle(list1));
+        System.out.println(reverseWords("the sky is blue"));
     }
 
     class ListNode {
@@ -308,5 +309,19 @@ public class DoublePointerTest {
             }
         }
         return null;
+    }
+
+    public String reverseWords(String s) {
+        String[] array = s.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (int i = array.length - 1; i >= 0; i--) {
+            String item = array[i];
+            if (item.isEmpty()) {
+                continue;
+            }
+            sb.append(item);
+            sb.append(" ");
+        }
+        return sb.substring(0, sb.length() - 1);
     }
 }
