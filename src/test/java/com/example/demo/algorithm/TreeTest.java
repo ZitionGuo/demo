@@ -1,6 +1,5 @@
 package com.example.demo.algorithm;
 
-import org.apache.poi.ss.formula.functions.T;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -45,7 +44,13 @@ public class TreeTest {
 //        symmetricNode.right.right = new TreeNode(3);
 //        System.out.println(symmetricNode);
 //        System.out.println(isSymmetric(symmetricNode));
-//        System.out.println(maxDepth(a));
+        TreeNode depthTree = new TreeNode(2);
+        depthTree.left = new TreeNode(4);
+        depthTree.right = new TreeNode(6);
+        depthTree.left.left = new TreeNode(7);
+        depthTree.left.right = new TreeNode(9);
+        depthTree.left.left.left = new TreeNode(11);
+        System.out.println(maxDepth(depthTree));
 //        TreeNode preTreeNode = new TreeNode(2);
 //        preTreeNode.left = new TreeNode(3);
 //        preTreeNode.left.left = new TreeNode(1);
@@ -68,6 +73,8 @@ public class TreeTest {
 //        treeNode.right.right = new TreeNode(7);
 //        System.out.println(treeNode);
 //        System.out.println(minDepth1(treeNode));
+        System.out.println(sortedArrayToBST(new int[]{-1, 3, 4, 5, 7, 8}));
+        System.out.println(rightSideView(depthTree));
     }
 
     class TreeNode {
@@ -299,5 +306,30 @@ public class TreeTest {
         return min_depth + 1;
     }
 
+    public TreeNode sortedArrayToBST(int[] nums) {
+        TreeNode treeNode = new TreeNode();
+        for (int num : nums) {
+            fill(num, treeNode);
+        }
+        return treeNode;
+    }
 
+    private void fill(int num, TreeNode treeNode) {
+        if (treeNode == null) {
+            return;
+        }
+        treeNode.val = num;
+    }
+
+    // 2 6 9 11
+    // 找出每层最右边的元素，没有则拿左边的
+    public List<Integer> rightSideView(TreeNode root) {
+        ArrayList<Integer> list = new ArrayList<>();
+        f(list, root);
+        return list;
+    }
+
+    private void f(List<Integer> list, TreeNode node) {
+
+    }
 }
