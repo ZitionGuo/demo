@@ -325,11 +325,11 @@ public class TreeTest {
     // 找出每层最右边的元素，没有则拿左边的
     public List<Integer> rightSideView(TreeNode root) {
         ArrayList<Integer> list = new ArrayList<>();
-        f(list, root);
+        f(list, root, 0);
         return list;
     }
 
-    private void f(List<Integer> list, TreeNode node) {
+    private void f(List<Integer> list, TreeNode node, int depth) {
 
     }
 }
