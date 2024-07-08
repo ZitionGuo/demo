@@ -23,7 +23,8 @@ public class ArrayTest {
 //        System.out.println(maxProfit1(new int[]{7,1,5,3,6,4}));
 //        System.out.println(isPalindrome("A man, a plan, a canal: Panama"));
 //        System.out.println(permute(new int[]{1, 2, 3, 4}));
-        System.out.println(maxProfitSecondVersion(new int[]{7, 1, 5, 3, 6, 4}));
+//        System.out.println(maxProfitSecondVersion(new int[]{7, 1, 5, 3, 6, 4}));
+        System.out.println(maxProfitSecondVersion1(new int[]{7, 1, 5, 3, 6, 4}));
 
     }
 
@@ -276,7 +277,8 @@ public class ArrayTest {
         return profit;
     }
 
-    public int maxProfitSecondVersion2(int[] prices) {
+    // 动态规划
+    public int maxProfitSecondVersion1(int[] prices) {
         int[] dp = new int[prices.length + 1];//这里从第0天开始，到底i天
         dp[0] = 0;//第0天没有股票，最大利润为0
         dp[1] = 0;//第一天只能买，不能买，因此最大利润也是0
