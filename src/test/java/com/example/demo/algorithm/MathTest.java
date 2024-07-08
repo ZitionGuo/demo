@@ -3,6 +3,7 @@ package com.example.demo.algorithm;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
+import java.util.Stack;
 
 /**
  * @author guozixuan
@@ -16,7 +17,8 @@ public class MathTest {
 //        System.out.println(isHappy(19)); // 非快乐数即超时
 //        System.out.println(isHappy1(19)); // 哈希
 //        System.out.println(isPowerOfFour(16));
-        System.out.println(sumOfTheDigitsOfHarshadNumber(18));
+//        System.out.println(sumOfTheDigitsOfHarshadNumber(18));
+        System.out.println(addStrings("1785", "9256"));
     }
 
     public int accountBalanceAfterPurchase(int purchaseAmount) {
@@ -88,6 +90,40 @@ public class MathTest {
             temp += s.charAt(i) - '0';
         }
         return x % temp == 0 ? temp : -1;
+    }
+
+    // 123 6791
+    public String addStrings(String num1, String num2) {
+        Stack<String> stack1 = new Stack<>();
+        Stack<String> stack2 = new Stack<>();
+        for (int i = 0; i < num1.length(); i++) {
+            stack1.add(num1.charAt(i) + "");
+        }
+        for (int i = 0; i < num2.length(); i++) {
+            stack2.add(num2.charAt(i) + "");
+        }
+        StringBuilder sb = new StringBuilder();
+        boolean carry = false;
+        while (!stack1.isEmpty() || !stack2.isEmpty()) {
+            int endNum = carry ? 1 : 0;
+            if (!stack1.isEmpty()) {
+                endNum += Integer.parseInt(stack1.pop());
+            }
+            if (!stack2.isEmpty()) {
+                endNum += Integer.parseInt(stack2.pop());
+            }
+            if (endNum >= 10) {
+                endNum = endNum % 10;
+                carry = true;
+            } else {
+                carry = false;
+            }
+            sb.append(endNum);
+        }
+        if (carry) {
+            sb.append("1");
+        }
+        return sb.reverse().toString();
     }
 
 }
