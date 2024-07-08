@@ -22,7 +22,8 @@ public class ArrayTest {
 //        System.out.println(maxProfit(new int[]{7,1,5,3,6,4})); // 长度很大超时。。。
 //        System.out.println(maxProfit1(new int[]{7,1,5,3,6,4}));
 //        System.out.println(isPalindrome("A man, a plan, a canal: Panama"));
-        System.out.println(permute(new int[]{1, 2, 3, 4}));
+//        System.out.println(permute(new int[]{1, 2, 3, 4}));
+        System.out.println(maxProfitSecondVersion(new int[]{7, 1, 5, 3, 6, 4}));
 
     }
 
@@ -261,5 +262,29 @@ public class ArrayTest {
                 System.out.print(num[i][j] + " ");
             }
         }
+    }
+
+    public int maxProfitSecondVersion(int[] prices) {
+        int right = 0;
+        int profit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[right] < prices[i]) {
+                profit += prices[i] - prices[right];
+            }
+            right++;
+        }
+        return profit;
+    }
+
+    public int maxProfitSecondVersion2(int[] prices) {
+        int[] dp = new int[prices.length + 1];//这里从第0天开始，到底i天
+        dp[0] = 0;//第0天没有股票，最大利润为0
+        dp[1] = 0;//第一天只能买，不能买，因此最大利润也是0
+        for (int i = 1; i < prices.length; i++) {
+            int A = dp[i] + prices[i] - prices[i - 1];//第一种选择
+            int B = dp[i];//第二种选择
+            dp[i + 1] = Math.max(A, B);//i从0开始，所以dp[I＋1]是当前天数
+        }
+        return dp[prices.length];
     }
 }
