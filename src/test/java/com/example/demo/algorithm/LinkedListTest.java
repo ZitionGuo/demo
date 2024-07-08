@@ -51,7 +51,11 @@ public class LinkedListTest {
         ListNode listNode = new ListNode(1);
         listNode.next = new ListNode(2);
         listNode.next.next = new ListNode(2);
-        listNode.next.next.next = new ListNode(1);
+        listNode.next.next.next = new ListNode(3);
+        listNode.next.next.next.next = new ListNode(4);
+        listNode.next.next.next.next.next = new ListNode(4);
+        listNode.next.next.next.next.next.next = new ListNode(5);
+        System.out.println(deleteDuplicates(listNode));
     }
 
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
@@ -422,5 +426,35 @@ public class LinkedListTest {
         }
         return true;
     }
+
+    // 1 -> 1 -> 2 -> 3
+    // 2 -> 3
+    // 转化数据结构排除重复元素再拼接新的 node
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null) return null;
+
+        ListNode dummy = new ListNode();
+        dummy.next = head;
+        ListNode prev = dummy;
+
+        while (head != null) {
+            // 如果当前节点是重复的
+            if (head.next != null && head.val == head.next.val) {
+                // 找到所有重复的节点
+                while (head.next != null && head.val == head.next.val) {
+                    head = head.next;
+                }
+                // 跳过所有重复的节点 core
+                prev.next = head.next;
+            } else {
+                // 没有重复的节点，移动prev指针
+                prev = prev.next;
+            }
+            head = head.next;
+        }
+
+        return dummy.next;
+    }
+
 
 }
