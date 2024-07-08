@@ -2,6 +2,8 @@ package com.example.demo.algorithm;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -15,8 +17,9 @@ public class StackTest {
 
     @Test
     public void test() {
-        System.out.println(isValid("([)]")); // wrong method
-        System.out.println(isValid1("([)]")); // wrong method
+//        System.out.println(isValid("([)]")); // wrong method
+//        System.out.println(isValid1("([)]"));
+        System.out.println(calculate("5-2*2"));
     }
 
     static Map<Character, Character> brackets = new HashMap<>();
@@ -69,4 +72,42 @@ public class StackTest {
         }
         return stack.isEmpty();
     }
+
+    public int calculate(String s) {
+        int n = s.length();
+        Deque<Integer> deque = new ArrayDeque<>();
+        char design = '+';
+        int num = 0;
+        for (int i = 0; i < n; i++) {
+            char a = s.charAt(i);
+            if (Character.isDigit(a)) {
+                num = num * 10 + a - '0';
+            }
+            if (!Character.isDigit(a) && a != ' ' || i == n - 1) {
+                switch (design) {
+                    case '+':
+                        deque.push(num);
+                        break;
+                    case '-':
+                        deque.push(-num);
+                        break;
+                    case '*':
+                        int x = deque.pop();
+                        deque.push(num * x);
+                        break;
+                    default:
+                        deque.push(deque.pop() / num);
+                        break;
+                }
+                design = a;
+                num = 0;
+            }
+        }
+        int res = 0;
+        while (!deque.isEmpty()) {
+            res += deque.pop();
+        }
+        return res;
+    }
+
 }

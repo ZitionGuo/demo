@@ -14,18 +14,18 @@ public class TreeTest {
 
     @Test
     public void test() {
-        TreeNode treeNode = new TreeNode(2);
-        TreeNode left = new TreeNode(3);
-        treeNode.left = left;
-        treeNode.right = new TreeNode(4);
-        treeNode.right.left = new TreeNode(9);
-        treeNode.right.right = new TreeNode(10);
-        left.left = new TreeNode(1);
-        left.right = new TreeNode(6);
-        left.left.left = new TreeNode(7);
-        left.left.right = new TreeNode(8);
-        System.out.println(treeNode);
-        System.out.println(inorderTraversal(treeNode));
+//        TreeNode treeNode = new TreeNode(2);
+//        TreeNode left = new TreeNode(3);
+//        treeNode.left = left;
+//        treeNode.right = new TreeNode(4);
+//        treeNode.right.left = new TreeNode(9);
+//        treeNode.right.right = new TreeNode(10);
+//        left.left = new TreeNode(1);
+//        left.right = new TreeNode(6);
+//        left.left.left = new TreeNode(7);
+//        left.left.right = new TreeNode(8);
+//        System.out.println(treeNode);
+//        System.out.println(inorderTraversal(treeNode));
 //        System.out.println(inorderTraversal1(treeNode));
 //        TreeNode a = new TreeNode(1);
 //        a.left = new TreeNode(1);
@@ -50,7 +50,7 @@ public class TreeTest {
         depthTree.left.left = new TreeNode(7);
         depthTree.left.right = new TreeNode(9);
         depthTree.left.left.left = new TreeNode(11);
-        System.out.println(maxDepth(depthTree));
+//        System.out.println(maxDepth(depthTree));
 //        TreeNode preTreeNode = new TreeNode(2);
 //        preTreeNode.left = new TreeNode(3);
 //        preTreeNode.left.left = new TreeNode(1);
@@ -73,7 +73,7 @@ public class TreeTest {
 //        treeNode.right.right = new TreeNode(7);
 //        System.out.println(treeNode);
 //        System.out.println(minDepth1(treeNode));
-        System.out.println(sortedArrayToBST(new int[]{-1, 3, 4, 5, 7, 8}));
+//        System.out.println(sortedArrayToBST(new int[]{-1, 3, 4, 5, 7, 8}));
         System.out.println(rightSideView(depthTree));
     }
 
@@ -330,6 +330,17 @@ public class TreeTest {
     }
 
     private void f(List<Integer> list, TreeNode node, int depth) {
-
+        if (node == null) {
+            return;
+        }
+        depth++;
+        if (node.right != null) {
+            list.add(node.right.val);
+            f(list,node.right, depth);
+        }
+        if (node.left != null) {
+            list.add(node.left.val);
+            f(list, node.left, depth);
+        }
     }
 }
