@@ -2,6 +2,7 @@ package com.example.demo.algorithm;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -36,7 +37,9 @@ public class DoublePointerTest {
 //        System.out.println(longestPalindrome("babad"));
 //        System.out.println(detectCycle1(list1));
 //        System.out.println(detectCycle(list1));
-        System.out.println(reverseWords("the sky is blue"));
+//        System.out.println(reverseWords("the sky is blue"));
+//        System.out.println(threeSum(new int[]{-1,0,1,2,-1,-4}));
+        System.out.println(threeSum1(new int[]{-1,0,1,2,-1,-4}));
     }
 
     class ListNode {
@@ -324,4 +327,97 @@ public class DoublePointerTest {
         }
         return sb.substring(0, sb.length() - 1);
     }
+
+    /**
+     * 示例 1：
+     * 输入：nums = [-1,0,1,2,-1,-4]
+     * 输出：[[-1,-1,2],[-1,0,1]]
+     * 解释：
+     * nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0 。
+     * nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0 。
+     * nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0 。
+     * 不同的三元组是 [-1,0,1] 和 [-1,-1,2] 。
+     * 注意，输出的顺序和三元组的顺序并不重要。
+     */
+    // 全排列？+ containsAll？
+    // TODO 全排列2 才能完成，因为这里包含重复元素，输出的全排列集合列表有问题
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> permute = permute(nums);
+        System.out.println(permute);
+        List<List<Integer>> removeList = new ArrayList<>();
+        for (List<Integer> item : permute) {
+            int total = 0;
+            for (Integer num : item) {
+                total += num;
+            }
+            if (total != 0) {
+                removeList.add(item);
+            }
+        }
+        permute.removeAll(removeList);
+        return permute;
+    }
+
+    private List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        backtrack(result, new ArrayList<>(), nums);
+        return result;
+    }
+
+    private void backtrack(List<List<Integer>> result, List<Integer> tempList, int[] nums) {
+        if (tempList.size() == nums.length) {
+            result.add(new ArrayList<>(tempList));
+        } else {
+            for (int num : nums) {
+                if (tempList.contains(num)) {
+                    continue; // 已经包含的数字不再添加
+                }
+                tempList.add(num);
+                backtrack(result, tempList, nums);
+                tempList.remove(tempList.size() - 1);
+            }
+        }
+    }
+
+    public List<List<Integer>> threeSum1(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums);  // 先对数组进行排序
+
+        for (int i = 0; i < nums.length - 2; i++) {
+            // 跳过重复的元素
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+
+            int left = i + 1;
+            int right = nums.length - 1;
+
+            while (left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+
+                if (sum == 0) {
+                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+
+                    // 跳过重复的元素
+                    while (left < right && nums[left] == nums[left + 1]) {
+                        left++;
+                    }
+                    while (left < right && nums[right] == nums[right - 1]) {
+                        right--;
+                    }
+
+                    left++;
+                    right--;
+                } else if (sum < 0) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+        }
+
+        return result;
+    }
+
+
 }
