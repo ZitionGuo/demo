@@ -2,6 +2,7 @@ package com.example.demo.algorithm;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Stack;
 
@@ -18,8 +19,9 @@ public class MathTest {
 //        System.out.println(isHappy1(19)); // 哈希
 //        System.out.println(isPowerOfFour(16));
 //        System.out.println(sumOfTheDigitsOfHarshadNumber(18));
-        System.out.println(addStrings("1785", "9256")); // 栈版
-        System.out.println(addStrings1("1785", "9256")); // GPT 优化版
+//        System.out.println(addStrings("1785", "9256")); // 栈版
+//        System.out.println(addStrings1("1785", "9256")); // GPT 优化版
+        System.out.println(Arrays.toString(countNumbers(3))); //
     }
 
     public int accountBalanceAfterPurchase(int purchaseAmount) {
@@ -144,6 +146,15 @@ public class MathTest {
         }
 
         return sb.reverse().toString();
+    }
+
+    public int[] countNumbers(int cnt) {
+        double pow = Math.pow(10, cnt);
+        int[] result = new int[(int) pow - 1];
+        for (int i = 0; i < pow - 1; i++) {
+            result[i] = i + 1;
+        }
+        return result;
     }
 
 }

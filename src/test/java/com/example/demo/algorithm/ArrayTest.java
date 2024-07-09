@@ -24,7 +24,9 @@ public class ArrayTest {
 //        System.out.println(isPalindrome("A man, a plan, a canal: Panama"));
 //        System.out.println(permute(new int[]{1, 2, 3, 4}));
 //        System.out.println(maxProfitSecondVersion(new int[]{7, 1, 5, 3, 6, 4}));
-        System.out.println(maxProfitSecondVersion1(new int[]{7, 1, 5, 3, 6, 4}));
+//        System.out.println(maxProfitSecondVersion1(new int[]{7, 1, 5, 3, 6, 4}));
+//        System.out.println(maxProfitThirdVersion(new int[]{1, 2, 4, 7, 11})); // wrong answer，可以第一天买最后一天卖，该答案只考虑了两天情况
+        System.out.println(maxProfitThirdVersion1(new int[]{1, 2, 3, 4, 5}));
 
     }
 
@@ -289,4 +291,40 @@ public class ArrayTest {
         }
         return dp[prices.length];
     }
+
+    // 1 9 8 6 4
+
+    // 两笔 1 2 4 7 11
+    // 1,2,3,4,5
+    public int maxProfitThirdVersion(int[] prices) {
+        int left = 0;
+        int first = 0, second = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[left] < prices[i]) {
+                int increment = prices[i] - prices[left];
+                second = Math.min(first, increment);
+                first = Math.max(first, increment);
+            }
+            left++;
+        }
+        return first + second;
+    }
+
+    public int maxProfitThirdVersion1(int[] prices) {
+        int firstBuy = Integer.MIN_VALUE;
+        int firstSell = 0;
+        int secondBuy = Integer.MIN_VALUE;
+        int secondSell = 0;
+
+        for (int price : prices) {
+            firstBuy = Math.max(firstBuy, -price);            // 买入价格最小化
+            firstSell = Math.max(firstSell, firstBuy + price); // 卖出后的利润最大化
+            secondBuy = Math.max(secondBuy, firstSell - price); // 第二次买入后的净利润最大化
+            secondSell = Math.max(secondSell, secondBuy + price); // 第二次卖出后的利润最大化
+            System.out.println("firstBuy: " + firstBuy + ", firstSell: " + firstSell + ", secondBuy: " + secondBuy + ", secondSell: " + secondSell);
+        }
+
+        return secondSell;
+    }
+
 }
