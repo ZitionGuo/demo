@@ -3,6 +3,7 @@ package com.example.demo.algorithm;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
@@ -23,7 +24,8 @@ public class StackTest {
 //        System.out.println(isValid1("([)]"));
 //        System.out.println(calculate("5-2*2"));
 //        System.out.println(removeDuplicateLetters("bcabc")); // Wrong Answer 元素顺序会被改变，acdb -> abcd
-        System.out.println(removeDuplicateLetters1("cbacdcbc")); //
+//        System.out.println(removeDuplicateLetters1("cbacdcbc")); //
+        System.out.println(Arrays.toString(dailyTemperatures(new int[]{75, 71, 69, 76})));
     }
 
     static Map<Character, Character> brackets = new HashMap<>();
@@ -175,4 +177,30 @@ public class StackTest {
         return sb.toString();
     }
 
+
+    /**
+     * 示例 1:
+     * 输入: temperatures = [73,74,75,71,69,72,76,73]
+     * 输出: [1,1,4,2,1,1,0,0]
+     * 示例 2:
+     * <p>
+     * 输入: temperatures = [30,40,50,60]
+     * 输出: [1,1,1,0]
+     */
+    // 75,71,69,76 -> 3,2,1,0
+    public int[] dailyTemperatures(int[] temperatures) {
+        int length = temperatures.length;
+        int[] result = new int[length];
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < length; i++) {
+            while (!stack.isEmpty() && temperatures[i] > temperatures[stack.peek()]) {
+                int index = stack.pop();
+                result[index] = i - index;
+            }
+            stack.push(i);
+        }
+
+        return result;
+    }
 }
