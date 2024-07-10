@@ -3,9 +3,11 @@ package com.example.demo.algorithm;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Stack;
 
 /**
@@ -19,7 +21,9 @@ public class StackTest {
     public void test() {
 //        System.out.println(isValid("([)]")); // wrong method
 //        System.out.println(isValid1("([)]"));
-        System.out.println(calculate("5-2*2"));
+//        System.out.println(calculate("5-2*2"));
+//        System.out.println(removeDuplicateLetters("bcabc")); // Wrong Answer 元素顺序会被改变，acdb -> abcd
+        System.out.println(removeDuplicateLetters1("cbacdcbc")); //
     }
 
     static Map<Character, Character> brackets = new HashMap<>();
@@ -108,6 +112,67 @@ public class StackTest {
             res += deque.pop();
         }
         return res;
+    }
+
+    /**
+     * 示例 1：
+     * 输入：s = "bcabc"
+     * 输出："abc"
+     * <p>
+     * 示例 2：
+     * 输入：s = "cbacdcbc"
+     * 输出："acdb"
+     */
+    public String removeDuplicateLetters(String s) {
+        if (s.isEmpty()) return null;
+        PriorityQueue<Character> queue = new PriorityQueue<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!queue.contains(c)) {
+                queue.add(c);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while (!queue.isEmpty()) {
+            sb.append(queue.poll());
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 输入：s = "c b a c d c b c"
+     * 输出："acdb"
+     */
+    public String removeDuplicateLetters1(String s) {
+        int[] lastIndex = new int[26]; // 记录每个字母最后出现的位置
+        boolean[] seen = new boolean[26]; // 记录字母是否在栈中出现
+        Stack<Character> stack = new Stack<>(); // 用来存储结果字母的栈
+
+        // 记录每个字母最后出现的位置
+        for (int i = 0; i < s.length(); i++) {
+            lastIndex[s.charAt(i) - 'a'] = i;
+        }
+        System.out.println(Arrays.toString(lastIndex));
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (seen[c - 'a']) continue; // 如果字母已经在栈中出现过，则跳过
+
+            // 确保栈中的字母按字典序排列，并且当前栈顶字母在后面还会出现
+            while (!stack.isEmpty() && c < stack.peek() && lastIndex[stack.peek() - 'a'] > i) {
+                seen[stack.pop() - 'a'] = false; // 出栈并标记字母未出现
+            }
+
+            stack.push(c); // 当前字母入栈
+            seen[c - 'a'] = true; // 标记当前字母已出现
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (char c : stack) {
+            sb.append(c);
+        }
+
+        return sb.toString();
     }
 
 }
