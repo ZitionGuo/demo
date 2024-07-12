@@ -20,7 +20,8 @@ public class DynamicPrograming {
 //        System.out.println(minDistance("intention", "execution"));
 //        System.out.println(coinChange(new int[]{1, 2, 5}, 11)); // wrong answer -- 贪心是错的，要用动态规划
 //        System.out.println(coinChange1(new int[]{1, 2, 5}, 11));
-        System.out.println(getMinCoins(new int[]{1, 2, 5}, 11));
+//        System.out.println(getMinCoins(new int[]{1, 2, 5}, 11));
+        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
     }
 
     public List<List<Integer>> generate(int numRows) {
@@ -161,5 +162,14 @@ public class DynamicPrograming {
             process(coins, index + 1, rest - coins[index] * zhang, totalZhang + zhang);
         }
 
+    }
+
+    public int maxSubArray(int[] nums) {
+        int res = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            nums[i] += Math.max(nums[i - 1], 0);
+            res = Math.max(res, nums[i]);
+        }
+        return res;
     }
 }
