@@ -26,7 +26,10 @@ public class ArrayTest {
 //        System.out.println(maxProfitSecondVersion(new int[]{7, 1, 5, 3, 6, 4}));
 //        System.out.println(maxProfitSecondVersion1(new int[]{7, 1, 5, 3, 6, 4}));
 //        System.out.println(maxProfitThirdVersion(new int[]{1, 2, 4, 7, 11})); // wrong answer，可以第一天买最后一天卖，该答案只考虑了两天情况
-        System.out.println(maxProfitThirdVersion1(new int[]{1, 2, 3, 4, 5}));
+//        System.out.println(maxProfitThirdVersion1(new int[]{1, 2, 3, 4, 5}));
+//        System.out.println(spiralOrder(new int[][]{{1, 2, 3}, {4, 5, 6}})); // wrong answer， 非螺旋而是顺时针逆时针。。
+//        System.out.println(spiralOrder(new int[][]{{1, 2, 3}, {4, 5, 6}}));
+        System.out.println(hIndex(new int[]{3, 0, 6, 1, 5})); // 0 1 3 5 6
 
     }
 
@@ -325,6 +328,44 @@ public class ArrayTest {
         }
 
         return secondSell;
+    }
+
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> resultList = new ArrayList<>();
+        if (matrix == null) {
+            return resultList;
+        }
+        // 基数从左往右，偶数从右往左
+        boolean inorderFlag = true;
+        for (int i = 0; i < matrix.length; i++) {
+            int[] array = matrix[i];
+            if (inorderFlag) {
+                for (int i1 = 0; i1 < array.length; i1++) {
+                    resultList.add(array[i1]);
+                }
+                inorderFlag = false;
+            } else {
+                for (int i1 = array.length - 1; i1 >= 0; i1--) {
+                    resultList.add(array[i1]);
+                }
+                inorderFlag = true;
+            }
+        }
+        return resultList;
+    }
+
+    // 0 1 3 5 6
+    public int hIndex(int[] citations) {
+        int length = citations.length;
+        Arrays.sort(citations);
+        int count = 0;
+        for (int i = length - 1; i >= 0; i--) {
+            System.out.println("length-i: " + (length - i));
+            if (citations[i] >= length - i) {
+                count++;
+            }
+        }
+        return count;
     }
 
 }
