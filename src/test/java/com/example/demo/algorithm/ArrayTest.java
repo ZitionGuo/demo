@@ -28,7 +28,8 @@ public class ArrayTest {
 //        System.out.println(maxProfitThirdVersion(new int[]{1, 2, 4, 7, 11})); // wrong answer，可以第一天买最后一天卖，该答案只考虑了两天情况
 //        System.out.println(maxProfitThirdVersion1(new int[]{1, 2, 3, 4, 5}));
 //        System.out.println(spiralOrder(new int[][]{{1, 2, 3}, {4, 5, 6}})); // wrong answer， 非螺旋而是顺时针逆时针。。
-        System.out.println(spiralOrder1(new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}));
+//        System.out.println(spiralOrder1(new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}));
+        System.out.println(Arrays.deepToString(generateMatrix(3)));
 //        System.out.println(hIndex(new int[]{3, 0, 6, 1, 5})); // 0 1 3 5 6
 
     }
@@ -396,6 +397,44 @@ public class ArrayTest {
         }
 
         return result;
+    }
+
+    public int[][] generateMatrix(int n) {
+        int[][] matrix = new int[n][n];
+        int num = 1;
+        int top = 0, bottom = n - 1, left = 0, right = n - 1;
+
+        while (top <= bottom && left <= right) {
+            // 从左到右填充上边界
+            for (int i = left; i <= right; i++) {
+                matrix[top][i] = num++;
+            }
+            top++; // 上边界下移
+
+            // 从上到下填充右边界
+            for (int i = top; i <= bottom; i++) {
+                matrix[i][right] = num++;
+            }
+            right--; // 右边界左移
+
+            // 从右到左填充下边界
+            if (top <= bottom) {
+                for (int i = right; i >= left; i--) {
+                    matrix[bottom][i] = num++;
+                }
+                bottom--; // 下边界上移
+            }
+
+            // 从下到上填充左边界
+            if (left <= right) {
+                for (int i = bottom; i >= top; i--) {
+                    matrix[i][left] = num++;
+                }
+                left++; // 左边界右移
+            }
+        }
+
+        return matrix;
     }
 
     // 0 1 3 5 6
