@@ -1,5 +1,6 @@
 package com.example.demo.algorithm;
 
+import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -19,7 +20,9 @@ public class MapTest {
 //        System.out.println(isIsomorphic("paper", "title")); // 很麻烦
 //        System.out.println(containsNearbyDuplicate(new int[]{1,2,3,1}, 2)); //
 //        System.out.println(containsNearbyDuplicate1(new int[]{1,2,3,1}, 3)); // bad performance
-        System.out.println(lengthOfLongestSubstring("pwwkew"));
+//        System.out.println(lengthOfLongestSubstring("pwwkew"));
+//        System.out.println(wordPattern1("abbc", "say my my name")); // wrong answer， 没有考虑单词和模式字符的双向映射。-- 作为面试题不错
+        System.out.println(wordPattern1("abbc", "dog dog dog dog"));
 
     }
 
@@ -51,11 +54,11 @@ public class MapTest {
     /**
      * 给定一个大小为 n 的数组 nums ，返回其中的多数元素。多数元素是指在数组中出现次数 大于 ⌊ n/2 ⌋ 的元素。
      * 你可以假设数组是非空的，并且给定的数组总是存在多数元素。
-     *
+     * <p>
      * 示例 1：
      * 输入：nums = [3,2,3]
      * 输出：3
-     *
+     * <p>
      * 示例 2：
      * 输入：nums = [2,2,1,1,1,2,2]
      * 输出：2
@@ -251,8 +254,8 @@ public class MapTest {
                 continue;
             }
             for (int i = 0; i < integers.size() - 1; i++) {
-                if (integers.get(i+1) != null) {
-                    if (integers.get(i+1) - integers.get(i) <= k) {
+                if (integers.get(i + 1) != null) {
+                    if (integers.get(i + 1) - integers.get(i) <= k) {
                         return true;
                     }
                 }
@@ -263,10 +266,10 @@ public class MapTest {
 
     /**
      * 解答失败:
-     * 	测试用例:"pwwkew"
-     * 	测试结果:4
-     * 	期望结果:3
-     * 	stdout:
+     * 测试用例:"pwwkew"
+     * 测试结果:4
+     * 期望结果:3
+     * stdout:
      */
     public int lengthOfLongestSubstring(String s) {
         HashSet<Character> set = new HashSet<>();
@@ -281,10 +284,68 @@ public class MapTest {
             }
             set.add(key);
             System.out.println(set);
-            System.out.println("right: "+right+", left: "+left);
+            System.out.println("right: " + right + ", left: " + left);
             longestLength = Math.max(longestLength, right - left + 1);
         }
         return longestLength;
+    }
+
+    /**
+     * 示例 1:
+     * 输入: pattern = "abba", s = "dog cat cat dog"
+     * 输出: true
+     * 示例 2:
+     * <p>
+     * 输入:pattern = "abba", s = "dog cat cat fish"
+     * 输出: false
+     * say my new name abbc
+     *
+     * 测试用例:"abba"
+     * 			"dog dog dog dog"
+     * 	测试结果:true
+     * 	期望结果:false
+     */
+    public boolean wordPattern(String pattern, String s) {
+        String[] array = s.split(" ");
+        HashMap<Character, String> map = new HashMap<>();
+        for (int i = 0; i < pattern.length(); i++) {
+            char key = pattern.charAt(i);
+            String value = map.get(key);
+            if (value == null) {
+                map.put(key, array[i]);
+            } else {
+                if (!value.equals(array[i])) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean wordPattern1(String pattern, String s) {
+        String[] array = s.split(" ");
+        if (pattern.length() != array.length) {
+            return false;
+        }
+        HashMap<Character, String> map = new HashMap<>();
+        HashMap<String, Character> reverseMap = new HashMap<>();
+        for (int i = 0; i < pattern.length(); i++) {
+            char key = pattern.charAt(i);
+            String value = array[i];
+
+            if (!map.containsKey(key)) {
+                if (reverseMap.containsKey(value)) {
+                    return false;
+                }
+                map.put(key, value);
+                reverseMap.put(value, key);
+            } else {
+                if (!map.get(key).equals(value)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 }
