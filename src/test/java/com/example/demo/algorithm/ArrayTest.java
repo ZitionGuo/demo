@@ -28,8 +28,8 @@ public class ArrayTest {
 //        System.out.println(maxProfitThirdVersion(new int[]{1, 2, 4, 7, 11})); // wrong answer，可以第一天买最后一天卖，该答案只考虑了两天情况
 //        System.out.println(maxProfitThirdVersion1(new int[]{1, 2, 3, 4, 5}));
 //        System.out.println(spiralOrder(new int[][]{{1, 2, 3}, {4, 5, 6}})); // wrong answer， 非螺旋而是顺时针逆时针。。
-//        System.out.println(spiralOrder(new int[][]{{1, 2, 3}, {4, 5, 6}}));
-        System.out.println(hIndex(new int[]{3, 0, 6, 1, 5})); // 0 1 3 5 6
+        System.out.println(spiralOrder1(new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}));
+//        System.out.println(hIndex(new int[]{3, 0, 6, 1, 5})); // 0 1 3 5 6
 
     }
 
@@ -352,6 +352,50 @@ public class ArrayTest {
             }
         }
         return resultList;
+    }
+
+    private List<Integer> spiralOrder1(int[][] matrix) {
+        List<Integer> result = new ArrayList<>();
+        if (matrix == null || matrix.length == 0) {
+            return result;
+        }
+
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int top = 0, bottom = m - 1, left = 0, right = n - 1;
+
+        while (top <= bottom && left <= right) {
+            // 从左到右遍历上边界
+            for (int i = left; i <= right; i++) {
+                result.add(matrix[top][i]);
+            }
+            top++; // 上边界下移
+
+            // 从上到下遍历右边界
+            for (int i = top; i <= bottom; i++) {
+                result.add(matrix[i][right]);
+            }
+            right--; // 右边界左移
+
+            // 确保还有行和列可以遍历
+            if (top <= bottom) {
+                // 从右到左遍历下边界
+                for (int i = right; i >= left; i--) {
+                    result.add(matrix[bottom][i]);
+                }
+                bottom--; // 下边界上移
+            }
+
+            if (left <= right) {
+                // 从下到上遍历左边界
+                for (int i = bottom; i >= top; i--) {
+                    result.add(matrix[i][left]);
+                }
+                left++; // 左边界右移
+            }
+        }
+
+        return result;
     }
 
     // 0 1 3 5 6
