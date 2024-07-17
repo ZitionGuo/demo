@@ -39,7 +39,8 @@ public class DoublePointerTest {
 //        System.out.println(detectCycle(list1));
 //        System.out.println(reverseWords("the sky is blue"));
 //        System.out.println(threeSum(new int[]{-1,0,1,2,-1,-4}));
-        System.out.println(threeSum1(new int[]{-1,0,1,2,-1,-4}));
+//        System.out.println(threeSum1(new int[]{-1,0,1,2,-1,-4}));
+        System.out.println(removeDuplicates(new int[]{0,0,0,0,0,1,1,1,2,3,3}));
     }
 
     class ListNode {
@@ -419,5 +420,25 @@ public class DoublePointerTest {
         return result;
     }
 
+    /**
+     * 输入：nums = [0,0,1,1,1,1,2,3,3] 输出：7, nums = [0,0,1,1,2,3,3]
+     * 解释：函数应返回新长度 length = 7, 并且原数组的前七个元素被修改为 0, 0, 1, 1, 2, 3, 3。
+     * 不需要考虑数组中超出新长度后面的元素。
+     * 输入：nums = [0,0,0,0,0,1,1,1,2,3,3] 输出：7, nums = [0,0,1,1,2,3,3]
+     */
+    public int removeDuplicates(int[] nums) {
+        if (nums.length <= 2) {
+            return nums.length;
+        }
+        int slow = 2;
+        for (int fast = 2; fast < nums.length; fast++) {
+            if (nums[fast] != nums[slow - 2]) {
+                // 在确保每个元素最多出现两次的同时，将符合条件的元素移动到数组的前面部分。
+                nums[slow] = nums[fast];
+                slow++;
+            }
+        }
+        return slow;
+    }
 
 }

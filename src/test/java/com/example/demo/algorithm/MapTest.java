@@ -299,7 +299,7 @@ public class MapTest {
      * 输入:pattern = "abba", s = "dog cat cat fish"
      * 输出: false
      * say my new name abbc
-     *
+     * <p>
      * 测试用例:"abba"
      * 			"dog dog dog dog"
      * 	测试结果:true
@@ -348,4 +348,40 @@ public class MapTest {
         return true;
     }
 
+    /**
+     * 双指针法
+     */
+    public boolean wordPattern2(String pattern, String s) {
+        String[] words = s.split(" ");
+        if (pattern.length() != words.length) {
+            return false;
+        }
+
+        HashMap<Character, String> map = new HashMap<>();
+        HashMap<String, Character> reverseMap = new HashMap<>();
+
+        int pIndex = 0, wIndex = 0;
+
+        while (pIndex < pattern.length() && wIndex < words.length) {
+            char pChar = pattern.charAt(pIndex);
+            String word = words[wIndex];
+
+            if (map.containsKey(pChar)) {
+                if (!map.get(pChar).equals(word)) {
+                    return false;
+                }
+            } else {
+                if (reverseMap.containsKey(word)) {
+                    return false;
+                }
+                map.put(pChar, word);
+                reverseMap.put(word, pChar);
+            }
+
+            pIndex++;
+            wIndex++;
+        }
+
+        return pIndex == pattern.length() && wIndex == words.length;
+    }
 }
