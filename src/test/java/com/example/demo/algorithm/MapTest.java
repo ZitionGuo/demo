@@ -23,6 +23,7 @@ public class MapTest {
 //        System.out.println(lengthOfLongestSubstring("pwwkew"));
 //        System.out.println(wordPattern1("abbc", "say my my name")); // wrong answer， 没有考虑单词和模式字符的双向映射。-- 作为面试题不错
         System.out.println(wordPattern1("abbc", "dog dog dog dog"));
+        System.out.println(Arrays.toString(intersection(new int[]{1, 2, 2, 1}, new int[]{2, 2})));
 
     }
 
@@ -301,9 +302,9 @@ public class MapTest {
      * say my new name abbc
      * <p>
      * 测试用例:"abba"
-     * 			"dog dog dog dog"
-     * 	测试结果:true
-     * 	期望结果:false
+     * "dog dog dog dog"
+     * 测试结果:true
+     * 期望结果:false
      */
     public boolean wordPattern(String pattern, String s) {
         String[] array = s.split(" ");
@@ -384,4 +385,47 @@ public class MapTest {
 
         return pIndex == pattern.length() && wIndex == words.length;
     }
+
+    public int[] intersection(int[] nums1, int[] nums2) {
+        HashSet<Integer> set = new HashSet<>();
+        for (int num : nums1) {
+            set.add(num);
+        }
+        HashSet<Integer> result = new HashSet<>();
+        for (int num : nums2) {
+            if (set.contains(num)) {
+                result.add(num);
+            }
+        }
+        return result.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    // 双指针法
+    public int[] intersection1(int[] nums1, int[] nums2) {
+        // 1.排序对nums1和nums2
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        // 2.设置两根指针i和j，并循环遍历
+        int i = 0, j = 0;
+        Set<Integer> set = new HashSet<>();
+        while (i < nums1.length && j < nums2.length) {
+            if (nums1[i] < nums2[j]) {
+                i++;
+            } else if (nums1[i] > nums2[j]) {
+                j++;
+            } else {
+                set.add(nums1[i]);
+                i++;
+                j++;
+            }
+        }
+        // 3.将集合转换成数组返回
+        int[] result = new int[set.size()];
+        Integer[] ts = set.toArray(new Integer[set.size()]);
+        for (int i1 = 0; i1 < ts.length; i1++) {
+            result[i1] = ts[i1];
+        }
+        return result;
+    }
+
 }
