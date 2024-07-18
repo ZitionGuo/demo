@@ -4,8 +4,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
@@ -40,7 +42,8 @@ public class DoublePointerTest {
 //        System.out.println(reverseWords("the sky is blue"));
 //        System.out.println(threeSum(new int[]{-1,0,1,2,-1,-4}));
 //        System.out.println(threeSum1(new int[]{-1,0,1,2,-1,-4}));
-        System.out.println(removeDuplicates(new int[]{0,0,0,0,0,1,1,1,2,3,3}));
+//        System.out.println(removeDuplicates(new int[]{0, 0, 0, 0, 0, 1, 1, 1, 2, 3, 3}));
+        System.out.println(isStrobogrammatic("101"));
     }
 
     class ListNode {
@@ -439,6 +442,67 @@ public class DoublePointerTest {
             }
         }
         return slow;
+    }
+
+    public boolean isStrobogrammatic(String num) {
+        int length = num.length();
+        if (length == 1) {
+            char charAt = num.charAt(0);
+            Character symmetryNum = getSymmetryNum(charAt);
+            if (symmetryNum == null || symmetryNum != num.charAt(0)) {
+                return false;
+            }
+        }
+        int left = 0, right = num.length() - 1;
+        while (left <= right) {
+            if (left == right) {
+                char charAt = num.charAt(left);
+                Character symmetryNum = getSymmetryNum(charAt);
+                if (symmetryNum == null || symmetryNum != num.charAt(left)) {
+                    return false;
+                }
+            }
+            Character leftChar = getSymmetryNum(num.charAt(left));
+            if (leftChar == null) {
+                return false;
+            } else if (leftChar != num.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+    private Character getSymmetryNum(char c) {
+        if (c == '6') {
+            return '9';
+        } else if (c == '9') {
+            return '6';
+        } else if (c == '1' || c == '8' || c == '0') {
+            return c;
+        }
+        return null;
+    }
+
+    // Map 封装版
+    public boolean isStrobogrammatic1(String num) {
+        Map<Character, Character> map = new HashMap<>();
+        map.put('0', '0');
+        map.put('1', '1');
+        map.put('6', '9');
+        map.put('8', '8');
+        map.put('9', '6');  //满足要求的数字对
+        int left = 0, right = num.length() - 1;     //双指针初始化
+        while (left <= right) {
+            if (map.get(num.charAt(left)) == null || map.get(num.charAt(right)) == null)     //不满足要求的数字
+                return false;
+            if (map.get(num.charAt(left)) != num.charAt(right))  //check一下是否真的中心对称
+                return false;
+            left++;
+            right--;
+        }
+        return true;
     }
 
 }
