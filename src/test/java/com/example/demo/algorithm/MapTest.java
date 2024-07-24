@@ -22,8 +22,9 @@ public class MapTest {
 //        System.out.println(containsNearbyDuplicate1(new int[]{1,2,3,1}, 3)); // bad performance
 //        System.out.println(lengthOfLongestSubstring("pwwkew"));
 //        System.out.println(wordPattern1("abbc", "say my my name")); // wrong answer， 没有考虑单词和模式字符的双向映射。-- 作为面试题不错
-        System.out.println(wordPattern1("abbc", "dog dog dog dog"));
-        System.out.println(Arrays.toString(intersection(new int[]{1, 2, 2, 1}, new int[]{2, 2})));
+//        System.out.println(wordPattern1("abbc", "dog dog dog dog"));
+//        System.out.println(Arrays.toString(intersection(new int[]{1, 2, 2, 1}, new int[]{2, 2})));
+        System.out.println(findTheDifference("abcd", "abcde"));
 
     }
 
@@ -426,6 +427,21 @@ public class MapTest {
             result[i1] = ts[i1];
         }
         return result;
+    }
+
+    // 可以用hashset， 出现相同元素 remove
+    public char findTheDifference(String s, String t) {
+        List<Character> list = new ArrayList<>();
+        for (int i = 0; i < t.length(); i++) {
+            list.add(t.charAt(i));
+        }
+        System.out.println(list);
+
+        for (int i = 0; i < s.length(); i++) {
+            Character c = s.charAt(i);
+            list.remove(c);
+        }
+        return list.get(0);
     }
 
 }
