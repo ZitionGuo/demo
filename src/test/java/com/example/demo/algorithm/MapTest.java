@@ -24,7 +24,8 @@ public class MapTest {
 //        System.out.println(wordPattern1("abbc", "say my my name")); // wrong answer， 没有考虑单词和模式字符的双向映射。-- 作为面试题不错
 //        System.out.println(wordPattern1("abbc", "dog dog dog dog"));
 //        System.out.println(Arrays.toString(intersection(new int[]{1, 2, 2, 1}, new int[]{2, 2})));
-        System.out.println(findTheDifference("abcd", "abcde"));
+//        System.out.println(findTheDifference("abcd", "abcde"));
+        System.out.println(wordBreak("leetcode", Arrays.asList("leet","code")));
 
     }
 
@@ -443,5 +444,22 @@ public class MapTest {
         }
         return list.get(0);
     }
+
+    /**
+     * 	测试用例:"cars"
+     * 			["car","ca","rs"]
+     * 	测试结果:false
+     * 	期望结果:true
+     */
+    public boolean wordBreak(String s, List<String> wordDict) {
+        String replace = s;
+        for (String item : wordDict) {
+            if (s.contains(item)) {
+                replace = replace.replace(item, "");
+            }
+        }
+        return replace.isEmpty();
+    }
+
 
 }

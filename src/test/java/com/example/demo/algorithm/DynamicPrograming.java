@@ -2,9 +2,7 @@ package com.example.demo.algorithm;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author guozixuan
@@ -21,7 +19,8 @@ public class DynamicPrograming {
 //        System.out.println(coinChange(new int[]{1, 2, 5}, 11)); // wrong answer -- 贪心是错的，要用动态规划
 //        System.out.println(coinChange1(new int[]{1, 2, 5}, 11));
 //        System.out.println(getMinCoins(new int[]{1, 2, 5}, 11));
-        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
+//        System.out.println(maxSubArray(new int[]{5, 4, -1, 7, 8}));
+        System.out.println(wordBreak("cars", Arrays.asList("car", "ca", "rs")));
     }
 
     public List<List<Integer>> generate(int numRows) {
@@ -172,4 +171,20 @@ public class DynamicPrograming {
         }
         return res;
     }
+
+    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> wordDictSet = new HashSet<>(wordDict);
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 0; j < i; j++) {
+                if (dp[j] && wordDictSet.contains(s.substring(j, i))) {
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[s.length()];
+    }
+
 }

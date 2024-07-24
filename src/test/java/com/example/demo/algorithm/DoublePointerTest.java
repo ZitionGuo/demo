@@ -44,6 +44,7 @@ public class DoublePointerTest {
 //        System.out.println(threeSum1(new int[]{-1,0,1,2,-1,-4}));
 //        System.out.println(removeDuplicates(new int[]{0, 0, 0, 0, 0, 1, 1, 1, 2, 3, 3}));
         System.out.println(isStrobogrammatic("101"));
+        System.out.println(longestMountain(new int[]{2, 1, 4, 7, 3, 2, 5}));
     }
 
     class ListNode {
@@ -503,6 +504,20 @@ public class DoublePointerTest {
             right--;
         }
         return true;
+    }
+
+    public int longestMountain(int[] arr) {
+        int length = arr.length;
+        if (length == 1) return 1;
+        int left = 0;
+        int result = 0;
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > left) {
+                result++;
+                left++;
+            } // dp思路
+        }
+        return result;
     }
 
 }
