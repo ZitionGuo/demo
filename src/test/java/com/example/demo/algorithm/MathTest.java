@@ -21,7 +21,12 @@ public class MathTest {
 //        System.out.println(sumOfTheDigitsOfHarshadNumber(18));
 //        System.out.println(addStrings("1785", "9256")); // 栈版
 //        System.out.println(addStrings1("1785", "9256")); // GPT 优化版
-        System.out.println(Arrays.toString(countNumbers(3))); //
+//        System.out.println(Arrays.toString(countNumbers(3))); //
+        System.out.println(multiply("881095803", "61")); // wrong answer 会超长 -- 主要问题在于每次计算部分积时，你直接将 num1 转换成了整数，这是不允许的。
+        System.out.println(multiply1("881095803", "61")); // GPT optimised
+        System.out.println(multiply2("881095803", "61")); // GPT optimised
+
+
     }
 
     public int accountBalanceAfterPurchase(int purchaseAmount) {
@@ -156,5 +161,104 @@ public class MathTest {
         }
         return result;
     }
+
+    // "356", "45"
+    public String multiply(String num1, String num2) {
+        if (num1.equals("0") || num2.equals("0")) return "0";
+        int length2 = num2.length();
+        StringBuilder sb = new StringBuilder(num2);
+        StringBuilder reversedNum2 = sb.reverse();
+        String result = "0";
+        for (int i = 0; i < length2; i++) {
+            char c = reversedNum2.charAt(i);
+            int multiplyValue = (c - '0') * Integer.parseInt(num1);
+            StringBuilder twoResult = new StringBuilder(String.valueOf(multiplyValue));
+            int j = i;
+            while (j > 0) {
+                twoResult.append("0");
+                j--;
+            }
+            System.out.println(twoResult);
+            result = addTwo(result, twoResult.toString());
+        }
+        return result;
+    }
+
+    private String addTwo(String num1, String num2) {
+        StringBuilder sb = new StringBuilder();
+        int i = num1.length() - 1, j = num2.length() - 1, carry = 0;
+        while (i >= 0 || j >= 0 || carry != 0) {
+            int n1 = i >= 0 ? num1.charAt(i) - '0' : 0;
+            int n2 = j >= 0 ? num2.charAt(j) - '0' : 0;
+            int sum = n1 + n2 + carry;
+
+            sb.append(sum % 10);
+            carry = sum / 10;
+
+            i--;
+            j--;
+        }
+        return sb.reverse().toString();
+    }
+    public String multiply1(String num1, String num2) {
+        if (num1.equals("0") || num2.equals("0")) return "0";
+        int length2 = num2.length();
+        StringBuilder sb = new StringBuilder(num2);
+        StringBuilder reversedNum2 = sb.reverse();
+        String result = "0";
+        for (int i = 0; i < length2; i++) {
+            char c = reversedNum2.charAt(i);
+            int digit2 = c - '0';
+            String multiplyValue = multiplySingleDigit(num1, digit2);
+            StringBuilder twoResult = new StringBuilder(multiplyValue);
+            for (int j = 0; j < i; j++) {
+                twoResult.append("0");
+            }
+            result = addTwo(result, twoResult.toString());
+        }
+        return result;
+    }
+
+    private String multiplySingleDigit(String num1, int digit2) {
+        StringBuilder sb = new StringBuilder();
+        int carry = 0;
+        for (int i = num1.length() - 1; i >= 0; i--) {
+            int digit1 = num1.charAt(i) - '0';
+            int product = digit1 * digit2 + carry;
+            sb.append(product % 10);
+            carry = product / 10;
+        }
+        if (carry > 0) {
+            sb.append(carry);
+        }
+        return sb.reverse().toString();
+    }
+
+    public String multiply2(String num1, String num2) {
+        if (num1.equals("0") || num2.equals("0")) return "0";
+
+        int m = num1.length(), n = num2.length();
+        int[] resultArray = new int[m + n];
+
+        for (int i = m - 1; i >= 0; i--) {
+            int n1 = num1.charAt(i) - '0';
+            for (int j = n - 1; j >= 0; j--) {
+                int n2 = num2.charAt(j) - '0';
+                int sum = (resultArray[i + j + 1] + n1 * n2);
+                resultArray[i + j + 1] = sum % 10;
+                resultArray[i + j] += sum / 10;
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int num : resultArray) {
+            if (!(sb.length() == 0 && num == 0)) {
+                sb.append(num);
+            }
+        }
+
+        return sb.length() == 0 ? "0" : sb.toString();
+    }
+
 
 }
