@@ -177,6 +177,14 @@ public class RecursionTest {
      * 输入： ["cat","banana","dog","nana","walk","walker","dogwalker"]
      * 输出： "dogwalker"
      * 解释： "dogwalker"可由"dog"和"walker"组成。
+     *
+     * 思路很简单，先把字符串数组按字符串长度进行排序，如果长度相同按字符串的字典序进行倒序
+     * 于是我们直接从字符串数组尾部开始寻找结果，对每个字符串直接使用暴力法，例如dogwalker
+     * 从第一个字符匹配到最后一个字符，每次往后移一个位置，都去判断当前字符之前的所有字符能否匹配一个字符串
+     * 流程如下
+     * d ogwalker,d 字典中无匹配，后移
+     * do gwalker,do 字典中无匹配，后移
+     * dog walker,dog 字典有匹配,递归判断walker
      */
     public String longestWord(String[] words) {
         //把words数组存入set中当字典用
