@@ -2,9 +2,7 @@ package com.example.demo.algorithm;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author guozixuan
@@ -44,12 +42,12 @@ public class TreeTest {
 //        symmetricNode.right.right = new TreeNode(3);
 //        System.out.println(symmetricNode);
 //        System.out.println(isSymmetric(symmetricNode));
-        TreeNode depthTree = new TreeNode(2);
-        depthTree.left = new TreeNode(4);
-        depthTree.right = new TreeNode(6);
-        depthTree.left.left = new TreeNode(7);
-        depthTree.left.right = new TreeNode(9);
-        depthTree.left.left.left = new TreeNode(11);
+//        TreeNode depthTree = new TreeNode(2);
+//        depthTree.left = new TreeNode(4);
+//        depthTree.right = new TreeNode(6);
+//        depthTree.left.left = new TreeNode(7);
+//        depthTree.left.right = new TreeNode(9);
+//        depthTree.left.left.left = new TreeNode(11);
 //        System.out.println(maxDepth(depthTree));
 //        TreeNode preTreeNode = new TreeNode(2);
 //        preTreeNode.left = new TreeNode(3);
@@ -74,7 +72,13 @@ public class TreeTest {
 //        System.out.println(treeNode);
 //        System.out.println(minDepth1(treeNode));
 //        System.out.println(sortedArrayToBST(new int[]{-1, 3, 4, 5, 7, 8}));
-        System.out.println(rightSideView(depthTree));
+//        System.out.println(rightSideView(depthTree));
+        TreeNode treeNode = new TreeNode(3);
+        treeNode.left = new TreeNode(9);
+        treeNode.right = new TreeNode(20);
+        treeNode.right.left = new TreeNode(15);
+        treeNode.left.right = new TreeNode(7);
+        System.out.println(levelOrder(treeNode));
     }
 
     class TreeNode {
@@ -336,11 +340,74 @@ public class TreeTest {
         depth++;
         if (node.right != null) {
             list.add(node.right.val);
-            f(list,node.right, depth);
+            f(list, node.right, depth);
         }
         if (node.left != null) {
             list.add(node.left.val);
             f(list, node.left, depth);
         }
     }
+
+    // 声明结果列表
+    public List<List<Integer>> list = new ArrayList<>();
+
+    // dfs: 深度优先搜索
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        // 为空返回
+        if (root == null) return list;
+        // 开始深度搜索,根节点深度索引为0(递归
+        dfs(root, 0);
+        return list;
+    }
+
+    public void dfs(TreeNode root, int level) {
+        // 若开始新一层遍历，创建该层存储列表
+        if (list.size() == level) {
+            list.add(new ArrayList<>());
+        }
+        // 递归左子树
+        if (root.left != null) {
+            dfs(root.left, level + 1);
+        }
+        // 将当前节点值加入至当前层列表
+        list.get(level).add(root.val);
+        // 递归右子树
+        if (root.right != null) {
+            dfs(root.right, level + 1);
+        }
+    }
+
+    // bfs: 广度优先搜索
+    public List<List<Integer>> levelOrder1(TreeNode root) {
+        // 结果表
+        List<List<Integer>> resList = new ArrayList<>();
+        // 为空返回
+        if (root == null) return resList;
+        // 初始化层队列
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        // 遍历树结构
+        while (!queue.isEmpty()) {
+            // 当前层列表
+            List<Integer> list = new ArrayList<>();
+            // 记录当前层元素数量
+            int levelSize = queue.size();
+            // 将当前层数据存储至当前层列表 list 并更新层队列 queue
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode treeNode = queue.poll();
+                list.add(Objects.requireNonNull(treeNode).val);
+                if (treeNode.left != null) {
+                    queue.offer(treeNode.left);
+                }
+                if (treeNode.right != null) {
+                    queue.offer(treeNode.right);
+                }
+            }
+            // 当前层元素处理完毕 将当前层列表加入至结果表
+            resList.add(list);
+        }
+        return resList;
+    }
+
+
 }
