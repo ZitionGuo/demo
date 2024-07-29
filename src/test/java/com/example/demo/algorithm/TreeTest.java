@@ -77,8 +77,9 @@ public class TreeTest {
         treeNode.left = new TreeNode(9);
         treeNode.right = new TreeNode(20);
         treeNode.right.left = new TreeNode(15);
-        treeNode.left.right = new TreeNode(7);
+        treeNode.right.right = new TreeNode(7);
         System.out.println(levelOrder(treeNode));
+        System.out.println(hasPathSum(treeNode, 30));
     }
 
     class TreeNode {
@@ -409,5 +410,14 @@ public class TreeTest {
         return resList;
     }
 
+    public boolean hasPathSum(TreeNode root, int sum) {
+        if (root == null) {
+            return false;
+        }
+        if (root.left == null && root.right == null) {
+            return sum == root.val;
+        }
+        return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+    }
 
 }
