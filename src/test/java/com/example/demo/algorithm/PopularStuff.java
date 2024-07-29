@@ -38,7 +38,6 @@ public class PopularStuff {
             // pre = 2 -> 1 -> null
             // pre - 3 -> 2 -> 1 -> null
             curr = nextTemp;
-            System.out.println(curr);
             // curr = 2,3,4,5
             // curr = 3,4,5
             // curr = 4,5
