@@ -2,14 +2,7 @@ package com.example.demo.algorithm;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author guozixuan
@@ -25,7 +18,8 @@ public class StackTest {
 //        System.out.println(calculate("5-2*2"));
 //        System.out.println(removeDuplicateLetters("bcabc")); // Wrong Answer 元素顺序会被改变，acdb -> abcd
 //        System.out.println(removeDuplicateLetters1("cbacdcbc")); //
-        System.out.println(Arrays.toString(dailyTemperatures(new int[]{75, 71, 69, 76})));
+//        System.out.println(Arrays.toString(dailyTemperatures(new int[]{75, 71, 69, 76})));
+        System.out.println(checkValidString("()"));
     }
 
     static Map<Character, Character> brackets = new HashMap<>();
@@ -203,4 +197,44 @@ public class StackTest {
 
         return result;
     }
+
+    /**
+     * 示例 2：
+     * 输入：s = "(*)"
+     * 输出：true
+     * <p>
+     * 示例 3：
+     * 输入：s = "(*))"
+     * 输出：true
+     */
+    public boolean checkValidString(String s) {
+        Deque<Integer> leftStack = new LinkedList<>();
+        Deque<Integer> asteriskStack = new LinkedList<>();
+        int n = s.length();
+        for (int i = 0; i < n; i++) {
+            char c = s.charAt(i);
+            if (c == '(') {
+                leftStack.push(i);
+            } else if (c == '*') {
+                asteriskStack.push(i);
+            } else {
+                if (!leftStack.isEmpty()) {
+                    leftStack.pop();
+                } else if (!asteriskStack.isEmpty()) {
+                    asteriskStack.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+        while (!leftStack.isEmpty() && !asteriskStack.isEmpty()) {
+            int leftIndex = leftStack.pop();
+            int asteriskIndex = asteriskStack.pop();
+            if (leftIndex > asteriskIndex) {
+                return false;
+            }
+        }
+        return leftStack.isEmpty();
+    }
+
 }
