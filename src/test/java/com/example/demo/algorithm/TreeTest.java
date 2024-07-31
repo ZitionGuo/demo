@@ -71,7 +71,7 @@ public class TreeTest {
 //        treeNode.right.right = new TreeNode(7);
 //        System.out.println(treeNode);
 //        System.out.println(minDepth1(treeNode));
-//        System.out.println(sortedArrayToBST(new int[]{-1, 3, 4, 5, 7, 8}));
+        System.out.println(sortedArrayToBST1(new int[]{-1, 3, 4, 5, 7, 8}));
 //        System.out.println(rightSideView(depthTree));
         TreeNode treeNode = new TreeNode(3);
         treeNode.left = new TreeNode(9);
