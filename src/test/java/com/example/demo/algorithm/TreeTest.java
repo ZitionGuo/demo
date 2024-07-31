@@ -420,4 +420,31 @@ public class TreeTest {
         return hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
     }
 
+    /**
+     * 二叉搜索树：
+     * 若任意节点的左子树不空，则左子树上所有节点的值均小于它的根节点的值；
+     * 若任意节点的右子树不空，则右子树上所有节点的值均大于它的根节点的值；
+     * 任意节点的左、右子树也分别为二叉查找树；
+     * 平衡树：每个节点的左右两子树高度差都不超过1的二叉树
+     */
+    // int val;
+// TreeNode left;
+// TreeNode right;
+    public TreeNode sortedArrayToBST1(int[] nums) {
+        return helper(nums, 0, nums.length - 1);
+    }
+
+    private TreeNode helper(int[] nums, int start, int end) {
+        if (start > end) return null;
+
+        int i = (end + start) >> 1;
+        TreeNode root = new TreeNode(nums[i]);
+
+        root.left = helper(nums, start, i - 1);
+        root.right = helper(nums, i + 1, end);
+
+        return root;
+    }
+
+
 }
