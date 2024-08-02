@@ -446,5 +446,52 @@ public class TreeTest {
         return root;
     }
 
+    class Solution {
+        public void flatten(TreeNode root) {
+            ArrayList<TreeNode> list = new ArrayList<>();
+            prooreder(root, list);
+            for (int i = 1; i < list.size(); i++) {
+                TreeNode pre = list.get(i - 1);
+                TreeNode cur = list.get(i);
+                pre.left = null;
+                pre.right = cur;
+            }
+
+        }
+
+        public void prooreder(TreeNode treeNode, ArrayList<TreeNode> list) {
+            if (treeNode == null) {
+                return;
+            }
+            list.add(treeNode);
+            prooreder(treeNode.left, list);
+            prooreder(treeNode.right, list);
+
+        }
+    }
+
+    public void flatten(TreeNode root) {
+        if (root == null) return;
+        Deque<TreeNode> stack = new LinkedList<TreeNode>();
+        //出来的顺序就是排序的顺序
+        stack.push(root);
+        TreeNode pre = null;
+        while (!stack.isEmpty()) {
+            TreeNode curr = stack.pop();
+            if (pre != null) {
+                pre.left = null;
+                pre.right = curr;
+            }
+            TreeNode left = curr.left;
+            TreeNode right = curr.right;
+            if (curr.right != null) {
+                stack.push(right);
+            }
+            if (curr.left != null) {
+                stack.push(left);
+            }
+            pre = curr;
+        }
+    }
 
 }
