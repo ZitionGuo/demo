@@ -29,8 +29,9 @@ public class ArrayTest {
 //        System.out.println(maxProfitThirdVersion1(new int[]{1, 2, 3, 4, 5}));
 //        System.out.println(spiralOrder(new int[][]{{1, 2, 3}, {4, 5, 6}})); // wrong answer， 非螺旋而是顺时针逆时针。。
 //        System.out.println(spiralOrder1(new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}}));
-        System.out.println(Arrays.deepToString(generateMatrix(3)));
+//        System.out.println(Arrays.deepToString(generateMatrix(3)));
 //        System.out.println(hIndex(new int[]{3, 0, 6, 1, 5})); // 0 1 3 5 6
+        System.out.println(minimumAbsDifference(new int[]{1, 3, 6, 10, 15}));
 
     }
 
@@ -449,6 +450,29 @@ public class ArrayTest {
             }
         }
         return count;
+    }
+
+    public List<List<Integer>> minimumAbsDifference(int[] arr) {
+        int min = Integer.MIN_VALUE;
+        Arrays.sort(arr);
+        for (int i = 1; i < arr.length; i++) {
+            int diff = arr[i - 1] - arr[i];
+            System.out.println(diff);
+            if (diff > min) {
+                min = diff;
+            }
+        }
+        List<List<Integer>> result = new ArrayList<>();
+        for (int i = 1; i < arr.length; i++) {
+            int diff = arr[i - 1] - arr[i];
+            if (diff == min) {
+                ArrayList<Integer> item = new ArrayList<>();
+                item.add(arr[i - 1]);
+                item.add(arr[i]);
+                result.add(item);
+            }
+        }
+        return result;
     }
 
 }
