@@ -34,12 +34,11 @@ public class Lru {
             // newNode != null
             if (this.head == null) { // 双向链表中一个节点也没有
                 this.head = newNode;
-                this.tail = newNode;
             } else { // 双向链表中之前有节点，
                 this.tail.next = newNode;
                 newNode.last = this.tail;
-                this.tail = newNode;
             }
+            this.tail = newNode;
         }
 
         // 潜台词 ： 双向链表上一定有这个node
