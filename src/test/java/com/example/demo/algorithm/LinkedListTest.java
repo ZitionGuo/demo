@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 /**
@@ -50,12 +51,16 @@ public class LinkedListTest {
 //        System.out.println(reverseBetween(listNode, 2,4));
         ListNode listNode = new ListNode(1);
         listNode.next = new ListNode(2);
-        listNode.next.next = new ListNode(2);
-        listNode.next.next.next = new ListNode(3);
+        listNode.next.next = new ListNode(3);
+        listNode.next.next.next = new ListNode(5);
         listNode.next.next.next.next = new ListNode(4);
-        listNode.next.next.next.next.next = new ListNode(4);
-        listNode.next.next.next.next.next.next = new ListNode(5);
-        System.out.println(deleteDuplicates(listNode));
+        listNode.next.next.next.next.next = new ListNode(6);
+        listNode.next.next.next.next.next.next = new ListNode(7);
+//        System.out.println(deleteDuplicates(listNode));
+//        System.out.println(removeNthFromFirst(listNode, 2));
+//        System.out.println(removeNthFromEnd(listNode, 2));
+//        System.out.println(removeNthFromEnd1(listNode, 2));
+        System.out.println(sortList(listNode));
     }
 
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
@@ -227,7 +232,7 @@ public class LinkedListTest {
     public ListNode removeElements(ListNode head, int val) {
         System.out.println(head);
         // 由于链表的第一个节点可能就是要删除的节点，直接删除头节点会使操作变得复杂。引入哑节点后，无论头节点是否需要被删除，都可以使用相同的逻辑处理，避免了对头节点的特殊处理。
-        ListNode dummy = new ListNode(val-1);
+        ListNode dummy = new ListNode(val - 1);
         dummy.next = head;
         ListNode prev = dummy;
         while (prev.next != null) {
@@ -334,13 +339,12 @@ public class LinkedListTest {
     }
 
 
-
     /**
      * 示例 1：
      * 输入：l1 = [2,4,3], l2 = [5,6,4]
      * 输出：[7,0,8]
      * 解释：342 + 465 = 807.
-     *
+     * <p>
      * 示例 3：
      * 输入：l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
      * 输出：[8,9,9,9,0,0,0,1]
@@ -378,7 +382,7 @@ public class LinkedListTest {
      * 输入：l1 = [2,4,3], l2 = [5,6,4]
      * 输出：[7,0,8]
      * 解释：342 + 465 = 807.
-     *
+     * <p>
      * 示例 3：
      * 输入：l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
      * 输出：[8,9,9,9,0,0,0,1]
@@ -456,5 +460,158 @@ public class LinkedListTest {
         return dummy.next;
     }
 
+    /**
+     * 输入：head = [1,2,3,4,5], n = 2
+     * 输出：[1,2,3,5]
+     * 示例 2：
+     * 计算长度拿到需要移除的第 N 个
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        int length = getLength(head);
+        int firstN = length - n; // 顺位删除的
+        ListNode dummy = new ListNode(0, head);
+        ListNode cur = dummy; // 0 -> 1 -> xxx
+        int i = 0;
+        while (head != null && i < firstN) {
+            cur.next = head; // 0 -> 1; 1 -> 2
+            head = head.next; // 2 -> 3; 3
+            cur = cur.next; // 1; 2
+            i++;
+        }
+        System.out.println(cur);
+        if (cur.next != null) {
+            cur.next = cur.next.next;
+        }
 
+        return dummy.next;
+    }
+
+    public int getLength(ListNode head) {
+        int length = 0;
+        while (head != null) {
+            ++length;
+            head = head.next;
+        }
+        return length;
+    }
+
+    // 双指针法
+    public ListNode removeNthFromEnd1(ListNode head, int n) {
+        // 创建一个虚拟节点，指向头节点
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        // 定义两个指针，初始都指向虚拟节点
+        ListNode first = dummy;
+        ListNode second = dummy;
+
+        // 让第一个指针先前进n+1步
+        for (int i = 0; i <= n; i++) {
+            first = first.next;
+        }
+
+        // 然后两个指针同时前进，直到第一个指针到达链表的末尾
+        while (first != null) {
+            first = first.next;
+            second = second.next;
+        }
+
+        // 此时第二个指针指向要删除节点的前一个节点，删除该节点
+        second.next = second.next.next;
+
+        // 返回虚拟节点的下一个节点，即新的头节点
+        return dummy.next;
+    }
+
+    // 哈希
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        HashSet<ListNode> set = new HashSet<>();
+        while (headA != null) {
+            set.add(headA);
+            headA = headA.next;
+        }
+        while (headB != null) {
+            if (!set.add(headB)) {
+                return headB;
+            } else {
+                headB = headB.next;
+            }
+        }
+        return null;
+    }
+
+    // 双指针法 https://leetcode.cn/problems/intersection-of-two-linked-lists/solutions/10774/tu-jie-xiang-jiao-lian-biao-by-user7208t/
+    public ListNode getIntersectionNode1(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) return null;
+        ListNode pA = headA, pB = headB;
+        while (pA != pB) {
+            pA = pA == null ? headB : pA.next;
+            pB = pB == null ? headA : pB.next;
+        }
+        return pA;
+    }
+
+    // 排序链表
+    // 添加到集合，排序，再创建新链表逐一加入元素 - bad way but works
+    public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ArrayList<Integer> list = new ArrayList<>();
+        while (head != null) {
+            list.add(head.val);
+            head = head.next;
+        }
+        Collections.sort(list);
+        ListNode dummy = new ListNode();
+        ListNode cur = dummy;
+        for (Integer integer : list) {
+            cur.next = new ListNode(integer);
+            cur = cur.next;
+        }
+        return dummy.next;
+    }
+
+    // 归并排序，减少额外空间
+    public ListNode sortList1(ListNode head) {
+        if (head == null || head.next == null) return head;
+
+        // Find the middle of the list
+        ListNode mid = getMid(head);
+        ListNode left = head;
+        ListNode right = mid.next;
+        mid.next = null; // Split the list into two halves
+
+        // Recursively sort both halves
+        left = sortList(left);
+        right = sortList(right);
+
+        // Merge the sorted halves
+        return merge(left, right);
+    }
+
+    private ListNode getMid(ListNode head) {
+        ListNode slow = head, fast = head.next;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+    private ListNode merge(ListNode left, ListNode right) {
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+        while (left != null && right != null) {
+            if (left.val < right.val) {
+                cur.next = left;
+                left = left.next;
+            } else {
+                cur.next = right;
+                right = right.next;
+            }
+            cur = cur.next;
+        }
+        if (left != null) cur.next = left;
+        if (right != null) cur.next = right;
+        return dummy.next;
+    }
 }

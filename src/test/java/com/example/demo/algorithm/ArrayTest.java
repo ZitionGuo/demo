@@ -475,4 +475,68 @@ public class ArrayTest {
         return result;
     }
 
+    /**
+     * 第一层 i=0 j 0~n-1   j=n-1 i=0~m-1  i=m-1 j=n-1~0 j=0 i=m-1~0
+     * rows1=0   cols1=0   cols2=n-1  rows2=m-1
+     * rows1++   cols++    cols2--    rows2--
+     * <p>
+     * 终止条件：
+     * rows1>rows2  cols1>cols2
+     **/
+    public List<Integer> spiralOrder2(int[][] matrix) {
+        List<Integer> ret = new ArrayList();
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int rows1 = 0;
+        int rows2 = m - 1;
+        int cols1 = 0;
+        int cols2 = n - 1;
+
+        //避免添加重复元素，遍历过的元素值设置成一个固定值
+        int noVal = -100;
+        System.out.println("m:" + m + ";n:" + n);
+        while (rows1 <= rows2 && cols1 <= cols2) {
+            //向右
+            for (int j = cols1; j <= cols2; j++) {
+                if (matrix[rows1][j] != noVal) {
+                    ret.add(matrix[rows1][j]);
+                    matrix[rows1][j] = noVal;
+                }
+            }
+            rows1++;
+
+            //向下
+            for (int i = rows1; i <= rows2; i++) {
+                if (matrix[i][cols2] != noVal) {
+                    ret.add(matrix[i][cols2]);
+                    matrix[i][cols2] = noVal;
+                }
+            }
+            cols2--;
+
+            //向左
+            for (int j = cols2; j >= cols1; j--) {
+                if (matrix[rows2][j] != noVal) {
+                    ret.add(matrix[rows2][j]);
+                    matrix[rows2][j] = noVal;
+                }
+            }
+            rows2--;
+
+            //向上
+            for (int i = rows2; i >= rows1; i--) {
+                if (matrix[i][cols1] != noVal) {
+                    ret.add(matrix[i][cols1]);
+                    matrix[i][cols1] = noVal;
+                }
+            }
+            cols1++;
+
+            System.out.println("rows1:" + rows1 + ";rows2:" + rows2 + ";cols1:" + cols1 + ";cols2:" + cols2);
+        }
+
+        return ret;
+    }
+
+
 }
