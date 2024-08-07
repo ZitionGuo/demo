@@ -25,7 +25,7 @@ public class MapTest {
 //        System.out.println(wordPattern1("abbc", "dog dog dog dog"));
 //        System.out.println(Arrays.toString(intersection(new int[]{1, 2, 2, 1}, new int[]{2, 2})));
 //        System.out.println(findTheDifference("abcd", "abcde"));
-        System.out.println(wordBreak("leetcode", Arrays.asList("leet","code")));
+        System.out.println(wordBreak("leetcode", Arrays.asList("leet", "code")));
 
     }
 
@@ -446,10 +446,10 @@ public class MapTest {
     }
 
     /**
-     * 	测试用例:"cars"
-     * 			["car","ca","rs"]
-     * 	测试结果:false
-     * 	期望结果:true
+     * 测试用例:"cars"
+     * ["car","ca","rs"]
+     * 测试结果:false
+     * 期望结果:true
      */
     public boolean wordBreak(String s, List<String> wordDict) {
         String replace = s;
@@ -459,6 +459,33 @@ public class MapTest {
             }
         }
         return replace.isEmpty();
+    }
+
+    public int lengthOfLongestSubstringTwoDistinct(String s) {
+        char[] chars = s.toCharArray();
+        int len = chars.length;
+        if (len < 3) {
+            return len;
+        }
+        int[] temp = new int[128];
+        int left = 0, right = 0;
+        int count = 0, ans = 0;
+        while (right < len) {
+            if (temp[chars[right] - '0'] == 0) {
+                count++;
+            }
+            temp[chars[right] - '0']++;
+            while (count > 2) {
+                temp[chars[left] - '0']--;
+                if (temp[chars[left] - '0'] == 0) {
+                    count--;
+                }
+                left++;
+            }
+            ans = Math.max(ans, right - left + 1);
+            right++;
+        }
+        return ans;
     }
 
 
